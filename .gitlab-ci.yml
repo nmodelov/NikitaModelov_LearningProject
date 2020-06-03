@@ -1,0 +1,89 @@
+before_script:
+  - chmod a+x gradlew
+  - export ANDROID_HOME=/usr/local/share/android-sdk
+
+stages:
+  - build
+  - quality
+  - deploy
+
+buildDevelop:
+  stage: build
+  script:
+    - ./gradlew clean assembleDebug
+  artifacts:
+    paths:
+      - app/build/outputs/apk/debug/
+    expire_in: 1 week
+  only:
+    - develop
+  tags:
+    - android
+
+buildRelease:
+  stage: build
+  script:
+    - ./gradlew clean assembleRelease bundleRelease
+  artifacts:
+    paths:
+      - app/build/outputs/apk/release/
+      - app/build/outputs/bundle/release
+    expire_in: 1 week
+  only:
+    - master
+    - /^hotfix.*$/
+    - /^release.*$/
+  tags:
+    - android
+
+qualityDevelop:
+  stage: quality
+  script:
+    - ./gradlew ktlint detekt lint
+  only:
+    - develop
+  tags:
+    - android
+
+qualityFeature:
+  stage: quality
+  script:
+    - ./gradlew ktlint detekt lint
+  only:
+    - /^feature.*$/
+    - /^fix.*$/
+  tags:
+    - android
+
+qualityRelease:
+  stage: quality
+  script:
+    - ./gradlew ktlint detekt lint
+  only:
+    - master
+    - /^hotfix.*$/
+    - /^release.*$/
+  tags:
+    - android
+
+fabricBeta:
+  stage: deploy
+  script:
+    - bundle install && bundle exec fastlane beta
+  only:
+    # запускаем исключительно только на тэгах вида beta1.0.0 предполагается, что все необходимые проверки прошли до этого,
+    # поэтому не следует делать push тэга до того, как отработает весь pipelane CI.
+    - /^beta(?:(\d+)\.)?(?:(\d+)\.)?(\*|\d+)$/
+  tags:
+    - android
+
+fabricRelease:
+  stage: deploy
+  script:
+    - bundle install && bundle exec fastlane release
+  only:
+    # запускаем исключительно только на тэгах вида v1.0.0 предполагается, что все необходимые проверки прошли до этого,
+    # поэтому не следует делать push тэга до того, как отработает весь pipelane CI.
+    - /^v(?:(\d+)\.)?(?:(\d+)\.)?(\*|\d+)$/
+  tags:
+    - android

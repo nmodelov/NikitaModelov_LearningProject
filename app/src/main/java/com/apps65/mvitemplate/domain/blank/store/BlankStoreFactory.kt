@@ -1,7 +1,6 @@
 package com.apps65.mvitemplate.domain.blank.store
 
 import com.apps65.mvi.saving.SavedStateKeeper
-import com.apps65.mvikotlinrxjava.RxJavaExecutor
 import com.apps65.mvitemplate.domain.blank.store.BlankStore.Action
 import com.apps65.mvitemplate.domain.blank.store.BlankStore.Intent
 import com.apps65.mvitemplate.domain.blank.store.BlankStore.Label

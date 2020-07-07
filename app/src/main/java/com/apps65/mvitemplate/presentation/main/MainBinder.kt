@@ -6,8 +6,9 @@ import com.apps65.mvitemplate.presentation.blank.BlankScreen
 import com.arkivanov.mvikotlin.core.binder.BinderLifecycleMode
 import com.arkivanov.mvikotlin.core.lifecycle.doOnDestroy
 import com.arkivanov.mvikotlin.extensions.coroutines.bind
-import com.arkivanov.mvikotlin.extensions.coroutines.labels
 import com.arkivanov.mvikotlin.extensions.coroutines.events
+import com.arkivanov.mvikotlin.extensions.coroutines.labels
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.map
 import ru.terrakok.cicerone.Router
@@ -25,7 +26,7 @@ class MainBinder @Inject constructor(
 
     override fun onViewCreated(view: MainView) {
         super.onViewCreated(view)
-        bind(binderLifecycle, BinderLifecycleMode.START_STOP) {
+        bind(viewLifecycle, BinderLifecycleMode.CREATE_DESTROY, Dispatchers.Main.immediate) {
             mainStore.labels bindTo { handelLabel(it) }
             view.events.map(eventToIntent) bindTo mainStore
         }

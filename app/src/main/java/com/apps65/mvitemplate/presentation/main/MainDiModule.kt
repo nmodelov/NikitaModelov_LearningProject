@@ -9,7 +9,6 @@ import dagger.Provides
 @Module
 object MainDiModule {
     @Provides
-    @JvmStatic
     @ActivityScope
     fun provideNavigator(activity: MainActivity): AppNavigator {
         return AppNavigator(activity, R.id.content)

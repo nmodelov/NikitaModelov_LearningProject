@@ -37,8 +37,7 @@ android {
 
 dependencies {
     implementation dep('org.jetbrains.kotlin:kotlin-stdlib')
-    implementation dep('androidx.core:core-ktx')
-    implementation dep('androidx.appcompat:appcompat')
+
     testImplementation dep('junit:junit')
     androidTestImplementation dep('androidx.test.ext:junit')
     androidTestImplementation dep('androidx.test.espresso:espresso-core')
@@ -50,9 +49,8 @@ dependencies {
     implementation dep('androidx.lifecycle:lifecycle-livedata-ktx')
 
     // MVI Kotlin
-    implementation dep('com.arkivanov.mvikotlin:mvikotlin')
-    implementation dep('com.arkivanov.mvikotlin:mvikotlin-main')
-    implementation dep('com.arkivanov.mvikotlin:mvikotlin-extensions-coroutines')
+    api dep('com.arkivanov.mvikotlin:mvikotlin')
+    api dep('com.arkivanov.mvikotlin:mvikotlin-main')
     implementation dep('com.arkivanov.mvikotlin:androidx-lifecycle-interop')
 
     // Dagger2

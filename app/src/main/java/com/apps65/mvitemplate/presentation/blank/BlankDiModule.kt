@@ -9,7 +9,6 @@ import javax.inject.Provider
 @Module
 object BlankDiModule {
     @Provides
-    @JvmStatic
     @FragmentScope
     fun provideVMFactory(provider: Provider<BlankBinder>): ViewModelFactory<BlankBinder> {
         return ViewModelFactory(provider)

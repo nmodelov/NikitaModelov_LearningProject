@@ -4,7 +4,6 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 
 object NetUtils {
-    @JvmStatic
     fun provideOkHttp(apply: ((OkHttpClient.Builder) -> Unit) = {}): OkHttpClient {
         return OkHttpClient.Builder()
             .apply(apply)

@@ -5,7 +5,7 @@ dependencies {
     implementation dep('org.jetbrains.kotlin:kotlin-stdlib')
 
     // Rx
-    implementation dep('io.reactivex.rxjava3:rxjava')
+    api dep('io.reactivex.rxjava3:rxjava')
 
     // MVI Kotlin
     implementation dep('com.arkivanov.mvikotlin:mvikotlin')

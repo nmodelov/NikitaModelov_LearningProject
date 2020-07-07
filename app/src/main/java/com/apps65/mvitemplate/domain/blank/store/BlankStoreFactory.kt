@@ -1,6 +1,7 @@
 package com.apps65.mvitemplate.domain.blank.store
 
 import com.apps65.mvi.saving.SavedStateKeeper
+import com.apps65.mvikotlinrxjava.RxJavaExecutor
 import com.apps65.mvitemplate.domain.blank.store.BlankStore.Action
 import com.apps65.mvitemplate.domain.blank.store.BlankStore.Intent
 import com.apps65.mvitemplate.domain.blank.store.BlankStore.Label
@@ -31,7 +32,7 @@ internal class BlankStoreFactory @Inject constructor(
     }
 
     private fun getInitialState(): State {
-        val savedState = stateKeeper.get<State.Blank>(BLANK_STORE_STATE)
+        val savedState = stateKeeper.get<State>(BLANK_STORE_STATE)
         return savedState ?: State.Blank(0)
     }
 

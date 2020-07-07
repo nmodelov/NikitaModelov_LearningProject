@@ -70,7 +70,7 @@ ext {
             'ru.terrakok.cicerone:cicerone'                          : '5.1.1',
 
             // Preference
-            "androidx.preference:preference-ktx"                     : "1.1.1",
+            'androidx.preference:preference-ktx'                     : '1.1.1',
     ]
 
     dep = { String key ->

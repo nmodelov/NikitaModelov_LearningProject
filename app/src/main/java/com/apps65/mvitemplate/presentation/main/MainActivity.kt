@@ -24,6 +24,7 @@ class MainActivity : BaseActivity<MainView>() {
     lateinit var binderProvider: Provider<MainBinder>
 
     override val binder by viewModelFrom { binderProvider }
+    private val binding by viewBinding(ActivityMainBinding::inflate)
 
     @Inject
     lateinit var stateBundleKeeper: StateBundleKeeper
@@ -32,9 +33,10 @@ class MainActivity : BaseActivity<MainView>() {
         AndroidInjection.inject(this)
         stateBundleKeeper.restoreState(savedInstanceState)
         super.onCreate(savedInstanceState)
-        val binding by viewBinding(ActivityMainBinding::inflate)
         setContentView(binding.root)
-        binder.onViewCreated(MainViewImpl())
+        val mainView = MainViewImpl()
+        binder.onViewCreated(mainView)
+        mainView.restoreState(savedInstanceState)
     }
 
     override fun onResumeFragments() {

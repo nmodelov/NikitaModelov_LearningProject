@@ -7,8 +7,9 @@ import com.arkivanov.mvikotlin.core.binder.BinderLifecycleMode
 import com.arkivanov.mvikotlin.core.lifecycle.doOnDestroy
 import com.arkivanov.mvikotlin.extensions.coroutines.bind
 import com.arkivanov.mvikotlin.extensions.coroutines.labels
+import com.arkivanov.mvikotlin.extensions.coroutines.events
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.map
 import ru.terrakok.cicerone.Router
 import javax.inject.Inject
 
@@ -20,15 +21,25 @@ class MainBinder @Inject constructor(
 
     init {
         binderLifecycle.doOnDestroy(mainStore::dispose)
+    }
+
+    override fun onViewCreated(view: MainView) {
+        super.onViewCreated(view)
         bind(binderLifecycle, BinderLifecycleMode.START_STOP) {
             mainStore.labels bindTo { handelLabel(it) }
-            flowOf(MainStore.Intent.Start) bindTo mainStore
+            view.events.map(eventToIntent) bindTo mainStore
         }
     }
 
     private fun handelLabel(label: MainStore.Label) {
         when (label) {
             MainStore.Label.Started -> router.newRootScreen(BlankScreen)
+        }
+    }
+
+    private val eventToIntent: suspend (MainView.Event.() -> MainStore.Intent) = {
+        when (this) {
+            MainView.Event.OnAppStart -> MainStore.Intent.Start
         }
     }
 }

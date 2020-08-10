@@ -1,16 +1,14 @@
 package com.apps65
 
-import org.junit.Assert.assertEquals
-import org.junit.Test
+import org.assertj.core.api.Assertions.assertThat
+import org.spekframework.spek2.Spek
+import org.spekframework.spek2.style.specification.describe
 
-/**
- * Example local unit test, which will execute on the development machine (host).
- *
- * See [testing documentation](http://d.android.com/tools/testing).
- */
-class ExampleUnitTest {
-    @Test
-    fun addition_isCorrect() {
-        assertEquals(4, 2 + 2)
+object ExampleUnitTest : Spek({
+    describe("simple addition test") {
+        it("should be 4") {
+            assertThat(2 + 2).isEqualTo(4)
+        }
     }
-}
+})
+

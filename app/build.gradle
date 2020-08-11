@@ -60,6 +60,7 @@ android {
                 }
             }
         }
+        unitTests.returnDefaultValues = true
     }
 
     // Add Kotlin source directory to all source sets
@@ -95,6 +96,8 @@ dependencies {
     androidTestRuntimeOnly dep('de.mannodermaus.junit5:android-test-runner')
 
     androidTestImplementation dep('com.kaspersky.android-components:kaspresso')
+
+    testImplementation dep('org.jetbrains.kotlinx:kotlinx-coroutines-test')
 
     api project(":netutils")
     api project(":mvi")

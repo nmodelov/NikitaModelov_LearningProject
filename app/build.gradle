@@ -98,6 +98,7 @@ dependencies {
     androidTestImplementation dep('com.kaspersky.android-components:kaspresso')
 
     testImplementation dep('org.jetbrains.kotlinx:kotlinx-coroutines-test')
+    testImplementation dep('com.arkivanov.mvikotlin:rx')
 
     api project(":netutils")
     api project(":mvi")

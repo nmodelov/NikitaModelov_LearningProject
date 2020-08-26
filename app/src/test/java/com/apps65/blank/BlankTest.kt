@@ -5,6 +5,7 @@ import com.apps65.mvitemplate.domain.blank.store.BlankStore
 import com.apps65.mvitemplate.domain.blank.store.BlankStoreFactory
 import com.arkivanov.mvikotlin.core.utils.isAssertOnMainThreadEnabled
 import com.arkivanov.mvikotlin.main.store.DefaultStoreFactory
+import com.arkivanov.mvikotlin.rx.Observer
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.newSingleThreadContext
 import kotlinx.coroutines.runBlocking
@@ -29,6 +30,22 @@ object BlankTest : Spek({
             runBlocking(Dispatchers.Main) {
                 val currentState = blankStore.state as BlankStore.State.Blank
                 assertThat(currentState.blankCount).isEqualTo(1)
+            }
+        }
+
+        it("should publish Blank Label") {
+            var label: BlankStore.Label? = null
+
+            blankStore.labels(object : Observer<BlankStore.Label> {
+                override fun onComplete() = Unit
+
+                override fun onNext(value: BlankStore.Label) {
+                    label = value
+                }
+            })
+            blankStore.accept(BlankStore.Intent.Blank)
+            runBlocking(Dispatchers.Main) {
+                assertThat(label).isEqualTo(BlankStore.Label.Blank)
             }
         }
     }

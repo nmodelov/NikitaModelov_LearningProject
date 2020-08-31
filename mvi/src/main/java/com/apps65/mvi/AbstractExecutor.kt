@@ -13,6 +13,5 @@ abstract class AbstractExecutor<Intent : Any, Action : Any, State : Any, Result 
 
     override fun dispose() {
         executors.forEach { it.dispose() }
-        super.dispose()
     }
 }

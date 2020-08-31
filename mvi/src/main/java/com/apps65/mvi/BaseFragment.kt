@@ -26,6 +26,11 @@ abstract class BaseFragment<V : BaseView<*, *>>(@LayoutRes layoutId: Int) : Frag
         super.onStop()
     }
 
+    override fun onDestroyView() {
+        binder.onViewDestroyed()
+        super.onDestroyView()
+    }
+
     override fun onDestroy() {
         binder.onViewDestroyed()
         super.onDestroy()

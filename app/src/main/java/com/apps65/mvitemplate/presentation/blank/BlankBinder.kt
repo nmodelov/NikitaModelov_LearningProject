@@ -27,13 +27,13 @@ class BlankBinder @Inject constructor(
 
         val mainContext = Dispatchers.Main.immediate
 
-        //обновление интерфейса и навигация
+        // обновление интерфейса и навигация
         bind(viewLifecycle, BinderLifecycleMode.START_STOP, mainContext) {
             blankStore.states.map(stateToModel) bindTo view
             blankStore.labels bindTo { handleLabel(it) }
         }
 
-        //команды от view-controller, диапазон шире т.к. возможно что-то типа onActivityResult
+        // команды от view-controller, диапазон шире т.к. возможно что-то типа onActivityResult
         bind(viewLifecycle, BinderLifecycleMode.CREATE_DESTROY, mainContext) {
             view.events.map(eventToIntent) bindTo blankStore
         }

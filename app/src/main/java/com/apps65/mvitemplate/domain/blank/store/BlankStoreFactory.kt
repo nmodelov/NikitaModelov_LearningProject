@@ -11,13 +11,12 @@ import com.arkivanov.mvikotlin.core.store.StoreFactory
 import com.arkivanov.mvikotlin.extensions.coroutines.SuspendExecutor
 import javax.inject.Inject
 
+private const val BLANK_STORE_STATE = "blank_store_state"
+
 internal class BlankStoreFactory @Inject constructor(
     private val storeFactory: StoreFactory,
     private val stateKeeper: SavedStateKeeper
 ) {
-    companion object {
-        private const val BLANK_STORE_STATE = "blank_store_state"
-    }
 
     fun create(): BlankStore {
         return object : BlankStore,

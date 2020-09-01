@@ -28,6 +28,9 @@ abstract class Binder<V : BaseView<*, *>> : ViewModel() {
     }
 
     open fun onViewCreated(view: V) {
+    }
+
+    fun onCreate() {
         viewLifecycleRegistry = viewLifecycleRegistry ?: LifecycleRegistry()
         viewLifecycleRegistry?.onCreate()
     }

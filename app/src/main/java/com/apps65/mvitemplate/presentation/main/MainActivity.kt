@@ -36,7 +36,6 @@ class MainActivity : BaseActivity<MainView>() {
         setContentView(binding.root)
         val mainView = MainViewImpl()
         binder.onViewCreated(mainView)
-        mainView.restoreState(savedInstanceState)
     }
 
     override fun onResumeFragments() {

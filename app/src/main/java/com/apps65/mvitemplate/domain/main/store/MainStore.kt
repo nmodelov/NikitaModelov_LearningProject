@@ -1,9 +1,11 @@
 package com.apps65.mvitemplate.domain.main.store
 
+import android.os.Parcelable
 import com.apps65.mvitemplate.domain.main.store.MainStore.Intent
 import com.apps65.mvitemplate.domain.main.store.MainStore.Label
 import com.apps65.mvitemplate.domain.main.store.MainStore.State
 import com.arkivanov.mvikotlin.core.store.Store
+import kotlinx.android.parcel.Parcelize
 
 interface MainStore : Store<Intent, State, Label> {
 
@@ -11,9 +13,16 @@ interface MainStore : Store<Intent, State, Label> {
         object Start : Intent()
     }
 
-    sealed class State {
+    sealed class Action {
+        object Blank : Action()
+    }
+
+    sealed class State : Parcelable {
+        @Parcelize
+        object Init : State()
+
+        @Parcelize
         object Idle : State()
-        object Loading : State()
     }
 
     sealed class Label {

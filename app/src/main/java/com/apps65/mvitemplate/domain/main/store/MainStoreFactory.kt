@@ -1,30 +1,58 @@
 package com.apps65.mvitemplate.domain.main.store
 
+import com.apps65.mvi.saving.SavedStateKeeper
 import com.apps65.mvitemplate.domain.main.store.MainStore.Intent
 import com.apps65.mvitemplate.domain.main.store.MainStore.Label
 import com.apps65.mvitemplate.domain.main.store.MainStore.State
 import com.arkivanov.mvikotlin.core.store.Store
 import com.arkivanov.mvikotlin.core.store.StoreFactory
+import com.arkivanov.mvikotlin.extensions.coroutines.SuspendBootstrapper
 import com.arkivanov.mvikotlin.extensions.coroutines.SuspendExecutor
 import javax.inject.Inject
 
+private const val MAIN_STORE_STATE = "main_store_state"
+
 internal class MainStoreFactory @Inject constructor(
-    private val storeFactory: StoreFactory
+    private val storeFactory: StoreFactory,
+    private val stateKeeper: SavedStateKeeper
 ) {
 
     fun create(): MainStore {
         return object : MainStore,
             Store<Intent, State, Label> by storeFactory.create(
                 name = "MainStore",
-                initialState = State.Idle,
-                executorFactory = executorFactory
+                initialState = getInitialState(),
+                executorFactory = executorFactory,
+                bootstrapper = object : SuspendBootstrapper<MainStore.Action>() {
+                    override suspend fun bootstrap() {
+                        dispatch(MainStore.Action.Blank)
+                    }
+                }
             ) {}
+            .also { registerStateKeeper(it) }
+    }
+
+    private fun getInitialState(): State {
+        val savedState = stateKeeper.get<State>(MAIN_STORE_STATE)
+        return savedState ?: State.Init
+    }
+
+    private fun registerStateKeeper(store: MainStore) {
+        stateKeeper.register(store, MAIN_STORE_STATE) {
+            this.state // in this case just providing the state without changes
+            // you can provide provide a state which is different from the current state of store,
+            // for example if you don't want to show loading after restoring the state
+        }
     }
 
     private val executorFactory = {
         object : SuspendExecutor<Intent, Any, State, State, Label>() {
-            override suspend fun executeIntent(intent: Intent, getState: () -> State) {
-                publish(Label.Started)
+            override suspend fun executeAction(action: Any, getState: () -> State) {
+                super.executeAction(action, getState)
+                if (getState() == State.Init && action == MainStore.Action.Blank) {
+                    dispatch(State.Idle)
+                    publish(Label.Started)
+                }
             }
         }
     }

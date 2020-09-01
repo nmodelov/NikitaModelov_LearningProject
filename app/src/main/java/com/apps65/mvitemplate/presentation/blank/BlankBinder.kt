@@ -23,8 +23,6 @@ class BlankBinder @Inject constructor(
 
     @OptIn(ExperimentalCoroutinesApi::class)
     override fun onViewCreated(view: BlankView) {
-        super.onViewCreated(view)
-
         val mainContext = Dispatchers.Main.immediate
 
         // обновление интерфейса и навигация

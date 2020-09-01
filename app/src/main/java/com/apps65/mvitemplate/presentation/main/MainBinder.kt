@@ -25,7 +25,6 @@ class MainBinder @Inject constructor(
     }
 
     override fun onViewCreated(view: MainView) {
-        super.onViewCreated(view)
         bind(viewLifecycle, BinderLifecycleMode.CREATE_DESTROY, Dispatchers.Main.immediate) {
             mainStore.labels bindTo { handelLabel(it) }
             view.events.map(eventToIntent) bindTo mainStore

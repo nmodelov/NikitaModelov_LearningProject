@@ -51,6 +51,8 @@ dependencies {
     // MVI Kotlin
     api dep('com.arkivanov.mvikotlin:mvikotlin')
     api dep('com.arkivanov.mvikotlin:mvikotlin-main')
+    api dep('com.arkivanov.mvikotlin:rx')
+    api dep('com.arkivanov.mvikotlin:rx-internal')
     implementation dep('com.arkivanov.mvikotlin:androidx-lifecycle-interop')
 
     // Dagger2

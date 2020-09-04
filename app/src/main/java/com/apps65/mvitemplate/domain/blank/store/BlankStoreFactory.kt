@@ -19,7 +19,8 @@ internal class BlankStoreFactory @Inject constructor(
 ) {
 
     fun create(): BlankStore {
-        return object : BlankStore,
+        return object :
+            BlankStore,
             Store<Intent, State, Label> by storeFactory.create(
                 name = "BlankStore",
                 initialState = getInitialState(),

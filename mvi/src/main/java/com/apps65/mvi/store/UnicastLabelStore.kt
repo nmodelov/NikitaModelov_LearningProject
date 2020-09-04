@@ -13,8 +13,13 @@ import com.arkivanov.mvikotlin.rx.internal.PublishSubject
 import com.arkivanov.mvikotlin.rx.internal.Subject
 import com.arkivanov.mvikotlin.rx.observer
 
-internal class UnicastLabelStore<in Intent : Any,
-        in Action : Any, in Result : Any, out State : Any, Label : Any> @MainThread constructor(
+internal class UnicastLabelStore<
+    in Intent : Any,
+    in Action : Any,
+    in Result : Any,
+    out State : Any,
+    Label : Any>
+@MainThread constructor(
     initialState: State,
     private val bootstrapper: Bootstrapper<Action>?,
     executorFactory: () -> Executor<Intent, Action, State, Result, Label>,

@@ -42,6 +42,5 @@ class MviLifecycleObserver(
     @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
     override fun onDestroy(owner: LifecycleOwner) {
         binder.onViewDestroyed()
-        owner.lifecycle.removeObserver(this)
     }
 }

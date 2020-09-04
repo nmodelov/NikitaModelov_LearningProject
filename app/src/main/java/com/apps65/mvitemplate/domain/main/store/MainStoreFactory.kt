@@ -4,9 +4,9 @@ import com.apps65.mvi.saving.SavedStateKeeper
 import com.apps65.mvitemplate.domain.main.store.MainStore.Intent
 import com.apps65.mvitemplate.domain.main.store.MainStore.Label
 import com.apps65.mvitemplate.domain.main.store.MainStore.State
+import com.arkivanov.mvikotlin.core.store.SimpleBootstrapper
 import com.arkivanov.mvikotlin.core.store.Store
 import com.arkivanov.mvikotlin.core.store.StoreFactory
-import com.arkivanov.mvikotlin.extensions.coroutines.SuspendBootstrapper
 import com.arkivanov.mvikotlin.extensions.coroutines.SuspendExecutor
 import javax.inject.Inject
 
@@ -18,16 +18,13 @@ internal class MainStoreFactory @Inject constructor(
 ) {
 
     fun create(): MainStore {
-        return object : MainStore,
+        return object :
+            MainStore,
             Store<Intent, State, Label> by storeFactory.create(
                 name = "MainStore",
                 initialState = getInitialState(),
                 executorFactory = executorFactory,
-                bootstrapper = object : SuspendBootstrapper<MainStore.Action>() {
-                    override suspend fun bootstrap() {
-                        dispatch(MainStore.Action.Blank)
-                    }
-                }
+                bootstrapper = SimpleBootstrapper(MainStore.Action.Blank)
             ) {}
             .also { registerStateKeeper(it) }
     }

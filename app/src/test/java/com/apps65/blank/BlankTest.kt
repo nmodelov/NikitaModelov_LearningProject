@@ -42,13 +42,15 @@ object BlankTest : Spek({
             runBlockingTest(dispatcher) {
                 var label: BlankStore.Label? = null
 
-                blankStore.labels(object : Observer<BlankStore.Label> {
-                    override fun onComplete() = Unit
+                blankStore.labels(
+                    object : Observer<BlankStore.Label> {
+                        override fun onComplete() = Unit
 
-                    override fun onNext(value: BlankStore.Label) {
-                        label = value
+                        override fun onNext(value: BlankStore.Label) {
+                            label = value
+                        }
                     }
-                })
+                )
                 blankStore.accept(BlankStore.Intent.Blank)
                 advanceUntilIdle()
                 assertThat(label).isEqualTo(BlankStore.Label.Blank)

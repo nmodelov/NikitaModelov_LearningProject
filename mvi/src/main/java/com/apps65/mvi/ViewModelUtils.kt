@@ -23,12 +23,14 @@ class ViewModelOnStartLazy<VM : ViewModel>(
 ) : Lazy<VM> by lazy {
 
     init {
-        lifecycleOwner.lifecycle.addObserver(object : LifecycleObserver {
-            @OnLifecycleEvent(Lifecycle.Event.ON_START)
-            fun onStart() {
-                value // init viewModel
+        lifecycleOwner.lifecycle.addObserver(
+            object : LifecycleObserver {
+                @OnLifecycleEvent(Lifecycle.Event.ON_START)
+                fun onStart() {
+                    value // init viewModel
+                }
             }
-        })
+        )
     }
 }
 
@@ -40,7 +42,8 @@ inline fun <reified VM : ViewModel> Fragment.viewModelFrom(
         ViewModelLazy(
             VM::class,
             { this.viewModelStore },
-            { ViewModelFactory(provider.invoke()) })
+            { ViewModelFactory(provider.invoke()) }
+        )
     )
 }
 
@@ -52,6 +55,7 @@ inline fun <reified VM : ViewModel> FragmentActivity.viewModelFrom(
         ViewModelLazy(
             VM::class,
             { this.viewModelStore },
-            { ViewModelFactory(provider.invoke()) })
+            { ViewModelFactory(provider.invoke()) }
+        )
     )
 }

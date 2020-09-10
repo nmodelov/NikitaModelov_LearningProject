@@ -126,30 +126,38 @@ private class UnicastSubject<T>(initialValue: T? = null) : Subject<T> {
     } else {
         mutableListOf()
     }
-    private val subject = PublishSubject<T>()
-    private var hasObserver = false
+
+    private var observerConsumer: Observer<T>? = null
 
     override val isActive: Boolean
-        get() = subject.isActive
+        get() = observerConsumer != null
 
     override fun onComplete() {
-        subject.onComplete()
+        observerConsumer?.onComplete()
     }
 
     override fun onNext(value: T) {
-        if (!hasObserver) {
+        if (observerConsumer == null) {
             values.add(value)
         } else {
-            subject.onNext(value)
+            observerConsumer?.onNext(value)
         }
     }
 
     override fun subscribe(observer: Observer<T>): Disposable {
-        hasObserver = true
+        observerConsumer = observer
         values.forEach {
             observer.onNext(it)
         }
         values.clear()
-        return subject.subscribe(observer)
+        return object : Disposable {
+            override var isDisposed: Boolean = false
+                private set
+
+            override fun dispose() {
+                observerConsumer = null
+                isDisposed = true
+            }
+        }
     }
 }

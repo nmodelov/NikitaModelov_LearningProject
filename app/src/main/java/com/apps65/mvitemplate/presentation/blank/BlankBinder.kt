@@ -51,7 +51,7 @@ class BlankBinder @Inject constructor(
 
     private val eventToIntent: suspend (BlankView.Event.() -> BlankStore.Intent) = {
         when (this) {
-            BlankView.Event.OnBlankClick -> BlankStore.Intent.Blank
+            BlankView.Event.OnBlankClick -> BlankStore.Intent.Increment
         }
     }
 }

@@ -91,6 +91,7 @@ dependencies {
     testImplementation dep('org.spekframework.spek2:spek-dsl-jvm')
     testImplementation dep('org.spekframework.spek2:spek-runner-junit5')
     testImplementation dep('org.jetbrains.kotlin:kotlin-reflect')
+    testImplementation dep('org.jetbrains.kotlin:kotlin-stdlib-jdk8')
 
     androidTestImplementation dep('de.mannodermaus.junit5:android-test-core')
     androidTestRuntimeOnly dep('de.mannodermaus.junit5:android-test-runner')
@@ -107,7 +108,8 @@ dependencies {
     implementation dep('com.arkivanov.mvikotlin:mvikotlin')
     implementation dep('com.arkivanov.mvikotlin:mvikotlin-main')
     implementation dep('com.arkivanov.mvikotlin:mvikotlin-extensions-coroutines')
-    implementation dep('com.arkivanov.mvikotlin:androidx-lifecycle-interop')
+    testImplementation dep('com.arkivanov.mvikotlin:utils-internal')
+    testImplementation dep('com.badoo.reaktive:utils')
 
     // Dagger2
     implementation dep("com.google.dagger:dagger")

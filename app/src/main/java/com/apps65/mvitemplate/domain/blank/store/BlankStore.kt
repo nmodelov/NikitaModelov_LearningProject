@@ -10,7 +10,7 @@ import kotlinx.android.parcel.Parcelize
 interface BlankStore : Store<Intent, State, Label> {
 
     sealed class Intent {
-        object Blank : Intent()
+        object Increment : Intent()
     }
 
     sealed class Action {

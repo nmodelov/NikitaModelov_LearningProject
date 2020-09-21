@@ -3,6 +3,8 @@ package com.apps65.blank
 import com.apps65.mvi.saving.SavedStateKeeperImpl
 import com.apps65.mvitemplate.domain.blank.store.BlankStore
 import com.apps65.mvitemplate.domain.blank.store.BlankStoreFactory
+import com.apps65.mvitemplate.domain.blank.store.ExecutorsFactory
+import com.apps65.mvitemplate.domain.common.DispatchersProvider
 import com.arkivanov.mvikotlin.core.utils.isAssertOnMainThreadEnabled
 import com.arkivanov.mvikotlin.main.store.DefaultStoreFactory
 import com.arkivanov.mvikotlin.rx.Observer
@@ -19,6 +21,12 @@ import org.spekframework.spek2.style.specification.describe
 @ExperimentalCoroutinesApi
 object BlankTest : Spek({
     val dispatcher = TestCoroutineDispatcher()
+    val dispatcherProvider = object : DispatchersProvider {
+        override val default = dispatcher
+        override val main = Dispatchers.Main
+        override val unconfined = dispatcher
+        override val io = dispatcher
+    }
 
     beforeEachGroup {
         isAssertOnMainThreadEnabled = false
@@ -26,12 +34,16 @@ object BlankTest : Spek({
     }
 
     describe("blank screen test") {
-        val blankStoreFactory = BlankStoreFactory(DefaultStoreFactory, SavedStateKeeperImpl())
+        val blankStoreFactory = BlankStoreFactory(
+            storeFactory = DefaultStoreFactory,
+            stateKeeper = SavedStateKeeperImpl(),
+            executorsFactory = ExecutorsFactory(dispatcherProvider)
+        )
         val blankStore by memoized { blankStoreFactory.create() }
 
         it("should be 1 after increment") {
             runBlockingTest(dispatcher) {
-                blankStore.accept(BlankStore.Intent.Blank)
+                blankStore.accept(BlankStore.Intent.Increment)
                 advanceUntilIdle() // <-- Если в проверяемом коде есть delay
                 val currentState = blankStore.state as BlankStore.State.Blank
                 assertThat(currentState.blankCount).isEqualTo(1)
@@ -51,7 +63,7 @@ object BlankTest : Spek({
                         }
                     }
                 )
-                blankStore.accept(BlankStore.Intent.Blank)
+                blankStore.accept(BlankStore.Intent.Increment)
                 advanceUntilIdle()
                 assertThat(label).isEqualTo(BlankStore.Label.Blank)
             }

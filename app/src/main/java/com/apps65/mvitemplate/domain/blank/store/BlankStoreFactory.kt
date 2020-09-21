@@ -1,21 +1,19 @@
 package com.apps65.mvitemplate.domain.blank.store
 
 import com.apps65.mvi.saving.SavedStateKeeper
-import com.apps65.mvitemplate.domain.blank.store.BlankStore.Action
 import com.apps65.mvitemplate.domain.blank.store.BlankStore.Intent
 import com.apps65.mvitemplate.domain.blank.store.BlankStore.Label
 import com.apps65.mvitemplate.domain.blank.store.BlankStore.State
-import com.arkivanov.mvikotlin.core.store.Reducer
 import com.arkivanov.mvikotlin.core.store.Store
 import com.arkivanov.mvikotlin.core.store.StoreFactory
-import com.arkivanov.mvikotlin.extensions.coroutines.SuspendExecutor
 import javax.inject.Inject
 
 private const val BLANK_STORE_STATE = "blank_store_state"
 
 internal class BlankStoreFactory @Inject constructor(
     private val storeFactory: StoreFactory,
-    private val stateKeeper: SavedStateKeeper
+    private val stateKeeper: SavedStateKeeper,
+    private val executorsFactory: ExecutorsFactory
 ) {
 
     fun create(): BlankStore {
@@ -24,8 +22,8 @@ internal class BlankStoreFactory @Inject constructor(
             Store<Intent, State, Label> by storeFactory.create(
                 name = "BlankStore",
                 initialState = getInitialState(),
-                executorFactory = executorFactory,
-                reducer = reducer
+                executorFactory = executorsFactory.create(),
+                reducer = Reducer()
             ) {}
             .also { registerStateKeeper(it) }
     }
@@ -43,29 +41,7 @@ internal class BlankStoreFactory @Inject constructor(
         }
     }
 
-    private val executorFactory = {
-        object : SuspendExecutor<Intent, Action, State, Result, Label>() {
-            override suspend fun executeIntent(intent: Intent, getState: () -> State) {
-                val state = getState.invoke()
-                if (intent is Intent.Blank && state is State.Blank) {
-                    publish(Label.Blank)
-                    dispatch(Result.Blank(state.blankCount + 1))
-                }
-            }
-        }
-    }
-
-    private val reducer = object : Reducer<State, Result> {
-        override fun State.reduce(result: Result): State {
-            return if (this is State.Blank && result is Result.Blank) {
-                this.copy(blankCount = result.blankCount)
-            } else {
-                this
-            }
-        }
-    }
-
-    private sealed class Result {
-        data class Blank(val blankCount: Int) : Result()
+    internal sealed class Result {
+        data class Increment(val value: Int) : Result()
     }
 }

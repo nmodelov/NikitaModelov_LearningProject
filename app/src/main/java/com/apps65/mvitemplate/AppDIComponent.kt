@@ -1,6 +1,7 @@
 package com.apps65.mvitemplate
 
 import android.app.Application
+import com.apps65.mvitemplate.common.DispatchersProvider
 import com.apps65.mvitemplate.data.DataDIModule
 import com.apps65.mvitemplate.domain.DomainDIModule
 import com.apps65.mvitemplate.presentation.di.PresentationDIModule
@@ -23,6 +24,8 @@ interface AppDIComponent {
     interface Builder {
         @BindsInstance
         fun application(application: Application): Builder
+        @BindsInstance
+        fun dispatchers(dispatchersProvider: DispatchersProvider): Builder
         fun build(): AppDIComponent
     }
 

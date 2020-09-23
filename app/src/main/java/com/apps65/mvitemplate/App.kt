@@ -1,6 +1,7 @@
 package com.apps65.mvitemplate
 
 import android.app.Application
+import com.apps65.mvitemplate.common.DispatchersProviderImpl
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasAndroidInjector
@@ -24,6 +25,7 @@ class App : Application(), HasAndroidInjector {
     private fun initDI() {
         val appComponent = DaggerAppDIComponent.builder()
             .application(this)
+            .dispatchers(DispatchersProviderImpl)
             .build()
         appComponent.inject(this)
     }

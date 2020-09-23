@@ -1,10 +1,10 @@
 package com.apps65.blank
 
 import com.apps65.mvi.saving.SavedStateKeeperImpl
+import com.apps65.mvitemplate.common.DispatchersProvider
 import com.apps65.mvitemplate.domain.blank.store.BlankStore
 import com.apps65.mvitemplate.domain.blank.store.BlankStoreFactory
 import com.apps65.mvitemplate.domain.blank.store.ExecutorsFactory
-import com.apps65.mvitemplate.domain.common.DispatchersProvider
 import com.arkivanov.mvikotlin.core.utils.isAssertOnMainThreadEnabled
 import com.arkivanov.mvikotlin.main.store.DefaultStoreFactory
 import com.arkivanov.mvikotlin.rx.Observer

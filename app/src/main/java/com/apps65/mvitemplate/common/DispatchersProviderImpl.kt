@@ -1,4 +1,4 @@
-package com.apps65.mvitemplate.domain.common
+package com.apps65.mvitemplate.common
 
 import kotlinx.coroutines.Dispatchers
 

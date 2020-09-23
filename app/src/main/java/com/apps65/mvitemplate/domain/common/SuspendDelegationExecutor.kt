@@ -1,5 +1,6 @@
 package com.apps65.mvitemplate.domain.common
 
+import com.apps65.mvitemplate.common.DispatchersProvider
 import com.arkivanov.mvikotlin.core.annotations.MainThread
 import com.arkivanov.mvikotlin.core.store.Bootstrapper
 import com.arkivanov.mvikotlin.core.store.Executor
@@ -19,7 +20,7 @@ open class SuspendDelegationExecutor<in Intent : Any, in Action : Any, in State 
 
     private val callbacks = AtomicReference<Executor.Callbacks<State, Result, Label>>()
     private val getState: () -> State = { callbacks.get().state }
-    private val scope = CoroutineScope(dispatchersProvider.default)
+    private val scope = CoroutineScope(dispatchersProvider.unconfined)
 
     final override fun init(callbacks: Executor.Callbacks<State, Result, Label>) {
         this.callbacks.set(callbacks)

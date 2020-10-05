@@ -108,8 +108,8 @@ dependencies {
     implementation dep('com.arkivanov.mvikotlin:mvikotlin')
     implementation dep('com.arkivanov.mvikotlin:mvikotlin-main')
     implementation dep('com.arkivanov.mvikotlin:mvikotlin-extensions-coroutines')
+    // Spek2 plugin classpath fix
     testImplementation dep('com.arkivanov.mvikotlin:utils-internal')
-    testImplementation dep('com.badoo.reaktive:utils')
 
     // Dagger2
     implementation dep("com.google.dagger:dagger")

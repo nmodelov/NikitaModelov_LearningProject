@@ -16,9 +16,8 @@ object DataDIModule {
 
     @Provides
     @Singleton
-    internal fun providePref(context: Context): SharedPreferences {
-        return context.getSharedPreferences("pref_file", Context.MODE_PRIVATE)
-    }
+    internal fun providePref(context: Context): SharedPreferences =
+        context.getSharedPreferences("pref_file", Context.MODE_PRIVATE)
 
     @Module
     internal interface Declarations {

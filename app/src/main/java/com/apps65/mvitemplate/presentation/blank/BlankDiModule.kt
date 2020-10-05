@@ -10,7 +10,6 @@ import javax.inject.Provider
 object BlankDiModule {
     @Provides
     @FragmentScope
-    fun provideVMFactory(provider: Provider<BlankBinder>): ViewModelFactory<BlankBinder> {
-        return ViewModelFactory(provider)
-    }
+    fun provideVMFactory(provider: Provider<BlankBinder>): ViewModelFactory<BlankBinder> =
+        ViewModelFactory(provider)
 }

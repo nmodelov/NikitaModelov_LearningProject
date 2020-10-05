@@ -56,9 +56,7 @@ open class RxJavaExecutor<in Intent : Any, in Action : Any, in State : Any, Resu
     protected open fun executeAction(action: Action, getState: () -> State) {
     }
 
-    override fun isDisposed(): Boolean {
-        return disposables.isDisposed
-    }
+    override fun isDisposed(): Boolean = disposables.isDisposed
 
     override fun dispose() {
         disposables.clear()

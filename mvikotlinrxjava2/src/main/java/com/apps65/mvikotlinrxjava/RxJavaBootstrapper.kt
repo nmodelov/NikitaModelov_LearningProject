@@ -39,9 +39,7 @@ abstract class RxJavaBootstrapper<Action : Any> : Bootstrapper<Action>, Disposab
      * DisposableScope delegate
      */
 
-    override fun isDisposed(): Boolean {
-        return disposables.isDisposed
-    }
+    override fun isDisposed(): Boolean = disposables.isDisposed
 
     fun <T> Observable<T>.subscribeScoped(
         onSubscribe: ((Disposable) -> Unit)?,

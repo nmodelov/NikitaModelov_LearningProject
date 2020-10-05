@@ -10,7 +10,6 @@ import dagger.Provides
 object MainDiModule {
     @Provides
     @ActivityScope
-    fun provideNavigator(activity: MainActivity): AppNavigator {
-        return AppNavigator(activity, R.id.content)
-    }
+    fun provideNavigator(activity: MainActivity): AppNavigator =
+        AppNavigator(activity, R.id.content)
 }

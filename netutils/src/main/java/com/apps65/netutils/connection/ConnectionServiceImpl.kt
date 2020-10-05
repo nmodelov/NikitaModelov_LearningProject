@@ -37,9 +37,7 @@ class ConnectionServiceImpl constructor(context: Context) : ConnectionService {
         .replay(1)
         .refCount()
 
-    override fun observeConnectionState(): Observable<Boolean> {
-        return connectionState
-    }
+    override fun observeConnectionState(): Observable<Boolean> = connectionState
 
     override fun hasConnection(): Boolean {
         val connectedNetwork = connectivityManager.allNetworks.firstOrNull { it.isConnected() }

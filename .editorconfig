@@ -1,2 +1,2 @@
 [*.{kt, kts}]
-disabled_rules = import-ordering
+kotlin_imports_layout=idea

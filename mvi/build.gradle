@@ -1,53 +1,7 @@
 apply plugin: 'com.android.library'
-apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
-apply plugin: 'kotlin-kapt'
-
-android {
-    compileSdkVersion project.ext.compileSdkVersion
-
-    defaultConfig {
-        minSdkVersion project.ext.minSdkVersion
-        targetSdkVersion project.ext.targetSdkVersion
-        versionCode 1
-        versionName "1.0"
-
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles "consumer-rules.pro"
-    }
-
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-        }
-    }
-
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
-
-    kotlinOptions {
-        jvmTarget = "1.8"
-    }
-
-    buildFeatures.viewBinding = true
-
-    sourceSets {
-        main.java.srcDirs += 'src/main/kotlin'
-        test.java.srcDirs += 'src/test/kotlin'
-    }
-
-}
+apply from : '../android.module.gradle'
 
 dependencies {
-    implementation dep('org.jetbrains.kotlin:kotlin-stdlib')
-
-    testImplementation dep('junit:junit')
-    androidTestImplementation dep('androidx.test.ext:junit')
-    androidTestImplementation dep('androidx.test.espresso:espresso-core')
-
     // ViewModel
     implementation dep('androidx.lifecycle:lifecycle-viewmodel-ktx')
     implementation dep('androidx.lifecycle:lifecycle-runtime')
@@ -61,9 +15,9 @@ dependencies {
     api dep('com.arkivanov.mvikotlin:rx-internal')
 
     // Dagger2
-    implementation dep("com.google.dagger:dagger")
-    implementation dep("com.google.dagger:dagger-android")
-    implementation dep("com.google.dagger:dagger-android-support")
-    kapt dep("com.google.dagger:dagger-compiler")
-    kapt dep("com.google.dagger:dagger-android-processor")
+    implementation dep('com.google.dagger:dagger')
+    implementation dep('com.google.dagger:dagger-android')
+    implementation dep('com.google.dagger:dagger-android-support')
+    kapt dep('com.google.dagger:dagger-compiler')
+    kapt dep('com.google.dagger:dagger-android-processor')
 }

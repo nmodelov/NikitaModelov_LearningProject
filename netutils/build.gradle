@@ -1,47 +1,7 @@
 apply plugin: 'com.android.library'
-apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
-apply plugin: 'kotlin-kapt'
-
-android {
-    compileSdkVersion project.ext.compileSdkVersion
-
-    defaultConfig {
-        minSdkVersion project.ext.minSdkVersion
-        targetSdkVersion project.ext.targetSdkVersion
-        versionCode 1
-        versionName "1.0"
-
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles "consumer-rules.pro"
-    }
-
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-        }
-    }
-
-    kotlinOptions {
-        jvmTarget = "1.8"
-        freeCompilerArgs += "-Xopt-in=kotlin.RequiresOptIn"
-    }
-
-    sourceSets {
-        main.java.srcDirs += 'src/main/kotlin'
-        test.java.srcDirs += 'src/test/kotlin'
-    }
-}
+apply from : '../android.module.gradle'
 
 dependencies {
-    implementation dep('org.jetbrains.kotlin:kotlin-stdlib')
-    testImplementation dep('junit:junit')
-    androidTestImplementation dep('androidx.test.ext:junit')
-    androidTestImplementation dep('androidx.test.espresso:espresso-core')
-
-    implementation dep('org.jetbrains.kotlinx:kotlinx-coroutines-android')
-
     // OkHttp
     api dep('com.squareup.okhttp3:okhttp')
     implementation dep('com.squareup.okhttp3:logging-interceptor')

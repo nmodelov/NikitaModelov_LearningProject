@@ -20,7 +20,7 @@ buildscript {
 }
 
 plugins {
-    id("io.gitlab.arturbosch.detekt").version("${detektVersion}")
+    id('io.gitlab.arturbosch.detekt').version("${detektVersion}")
 }
 
 apply from: 'dependencies.gradle'
@@ -42,6 +42,14 @@ allprojects {
         compileSdkVersion = 29
         minSdkVersion = 21
         targetSdkVersion = 29
+
+        versionMajor = 1
+        versionMinor = 0
+        versionPatch = 0
+        versionBuild = 0
+        versionCode = versionMajor * 10000 + versionMinor * 1000 + versionPatch * 100 + versionBuild
+        versionName = "${versionMajor}.${versionMinor}.${versionPatch}"
+
     }
 }
 

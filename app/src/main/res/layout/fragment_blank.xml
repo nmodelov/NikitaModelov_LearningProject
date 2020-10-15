@@ -12,6 +12,16 @@
         android:orientation="vertical">
 
         <TextView
+            android:id="@+id/connection"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginRight="16dp"
+            android:textSize="40sp"
+            tools:text="NO" />
+
+        <TextView
             android:id="@+id/counter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

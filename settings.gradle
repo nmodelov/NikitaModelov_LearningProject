@@ -1,5 +1,3 @@
-include ':mvikotlinrxjava3'
-include ':mvikotlinrxjava2'
 include ':mvi'
 include ':netutils'
 include ':app'

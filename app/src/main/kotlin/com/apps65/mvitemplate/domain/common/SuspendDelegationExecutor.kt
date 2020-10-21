@@ -6,10 +6,13 @@ import com.arkivanov.mvikotlin.core.store.Bootstrapper
 import com.arkivanov.mvikotlin.core.store.Executor
 import com.arkivanov.mvikotlin.core.store.Reducer
 import com.arkivanov.mvikotlin.core.store.Store
+import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import timber.log.Timber
 import java.util.concurrent.atomic.AtomicReference
 
 open class SuspendDelegationExecutor<in Intent : Any, in Action : Any, in State : Any, Result : Any, Label : Any>(
@@ -20,7 +23,12 @@ open class SuspendDelegationExecutor<in Intent : Any, in Action : Any, in State 
 
     private val callbacks = AtomicReference<Executor.Callbacks<State, Result, Label>>()
     private val getState: () -> State = { callbacks.get().state }
-    private val scope = CoroutineScope(dispatchersProvider.unconfined)
+    private val errorHandler: CoroutineExceptionHandler = CoroutineExceptionHandler { _, e ->
+        onErrorOccur(e)
+    }
+    private val scope = CoroutineScope(
+        SupervisorJob() + dispatchersProvider.unconfined + errorHandler
+    )
 
     final override fun init(callbacks: Executor.Callbacks<State, Result, Label>) {
         this.callbacks.set(callbacks)
@@ -86,7 +94,7 @@ open class SuspendDelegationExecutor<in Intent : Any, in Action : Any, in State 
      *
      * @param result a `Result` to be dispatched to the `Reducer`
      */
-    protected suspend fun dispatch(result: Result) = withContext(dispatchersProvider.main.immediate) {
+    protected suspend fun dispatch(result: Result) = withContext(dispatchersProvider.main) {
         callbacks.get().onResult(result)
     }
 
@@ -95,7 +103,11 @@ open class SuspendDelegationExecutor<in Intent : Any, in Action : Any, in State 
      *
      * @param label a `Label` to be published
      */
-    protected suspend fun publish(label: Label) = withContext(dispatchersProvider.main.immediate) {
+    protected suspend fun publish(label: Label) = withContext(dispatchersProvider.main) {
         callbacks.get().onLabel(label)
+    }
+
+    protected open fun onErrorOccur(throwable: Throwable) {
+        Timber.e(throwable)
     }
 }

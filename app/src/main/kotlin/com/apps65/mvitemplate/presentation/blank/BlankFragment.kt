@@ -32,6 +32,6 @@ class BlankFragment : BaseFragment<BlankView>(R.layout.fragment_blank) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binder.onViewCreated(BlankViewImpl(binding))
+        binder.onViewCreated(BlankViewImpl(::binding))
     }
 }

@@ -1,8 +1,8 @@
 package com.apps65.blank
 
+import com.apps65.mvi.common.DispatchersProvider
 import com.apps65.mvi.saving.SavedStateKeeperImpl
 import com.apps65.mvi.store.UnicastStoreFactory
-import com.apps65.mvitemplate.common.DispatchersProvider
 import com.apps65.mvitemplate.domain.blank.store.BlankStore
 import com.apps65.mvitemplate.domain.blank.store.BlankStoreFactory
 import com.apps65.mvitemplate.domain.blank.store.ExecutorsFactory
@@ -23,7 +23,7 @@ import org.spekframework.spek2.style.specification.describe
 
 @ExperimentalCoroutinesApi
 object BlankTest : Spek({
-
+    isAssertOnMainThreadEnabled = false
     val dispatcher = TestCoroutineDispatcher()
     val dispatcherProvider = object : DispatchersProvider {
         override val default = dispatcher

@@ -1,7 +1,7 @@
 package com.apps65.mvitemplate
 
 import android.app.Application
-import com.apps65.mvitemplate.common.DispatchersProviderImpl
+import com.apps65.mvi.common.DispatchersProviderImpl
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasAndroidInjector

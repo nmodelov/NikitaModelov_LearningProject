@@ -1,7 +1,7 @@
 package com.apps65.mvitemplate
 
 import android.app.Application
-import com.apps65.mvitemplate.common.DispatchersProvider
+import com.apps65.mvi.common.DispatchersProvider
 import com.apps65.mvitemplate.data.DataDIModule
 import com.apps65.mvitemplate.domain.DomainDIModule
 import com.apps65.mvitemplate.presentation.di.PresentationDIModule

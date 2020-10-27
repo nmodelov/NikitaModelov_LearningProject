@@ -1,4 +1,4 @@
-package com.apps65.mvitemplate.common
+package com.apps65.mvi.common
 
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.MainCoroutineDispatcher

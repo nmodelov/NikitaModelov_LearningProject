@@ -21,6 +21,7 @@ dependencies {
     androidTestImplementation dep('com.kaspersky.android-components:kaspresso')
 
     testImplementation dep('com.arkivanov.mvikotlin:rx')
+    testImplementation dep('junit:junit')
 
     api project(':netutils')
     api project(':mvi')

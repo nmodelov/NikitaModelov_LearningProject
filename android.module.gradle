@@ -62,9 +62,8 @@ android {
     }
 
     // Add Kotlin source directory to all source sets
-    sourceSets {
-        main.java.srcDirs += 'src/main/kotlin'
-        test.java.srcDirs += 'src/test/kotlin'
+    sourceSets.each {
+        it.java.srcDirs += "src/$it.name/kotlin"
     }
 
     packagingOptions {
@@ -90,4 +89,6 @@ dependencies {
     androidTestImplementation dep('de.mannodermaus.junit5:android-test-core')
     androidTestRuntimeOnly dep('de.mannodermaus.junit5:android-test-runner')
     testImplementation dep('org.jetbrains.kotlinx:kotlinx-coroutines-test')
+
+    androidTestImplementation dep('androidx.test.ext:junit')
 }

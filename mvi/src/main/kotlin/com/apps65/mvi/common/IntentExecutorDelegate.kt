@@ -1,4 +1,4 @@
-package com.apps65.mvitemplate.domain.common
+package com.apps65.mvi.common
 
 import com.arkivanov.mvikotlin.core.annotations.MainThread
 
@@ -6,9 +6,7 @@ interface IntentExecutorDelegate<Intent : Any, State : Any, Result : Any, Label 
     @MainThread
     suspend fun executeIntent(
         intent: Intent,
-        getState: () -> State,
-        dispatch: suspend (Result) -> Unit,
-        publish: suspend (Label) -> Unit
+        executor: SuspendIntentExecutor<Intent, State, Result, Label>
     )
 }
 
@@ -16,8 +14,6 @@ interface ActionExecutorDelegate<Action : Any, State : Any, Result : Any, Label 
     @MainThread
     suspend fun executeAction(
         action: Action,
-        getState: () -> State,
-        dispatch: suspend (Result) -> Unit,
-        publish: suspend (Label) -> Unit
+        executor: SuspendActionExecutor<Action, State, Result, Label>
     )
 }

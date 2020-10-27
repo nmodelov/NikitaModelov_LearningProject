@@ -1,11 +1,13 @@
-package com.apps65.mvitemplate.domain.common
+package com.apps65.mvi.common
 
-import com.apps65.mvitemplate.common.DispatchersProvider
 import com.arkivanov.mvikotlin.core.annotations.MainThread
 import com.arkivanov.mvikotlin.core.store.Bootstrapper
 import com.arkivanov.mvikotlin.core.store.Executor
 import com.arkivanov.mvikotlin.core.store.Reducer
 import com.arkivanov.mvikotlin.core.store.Store
+import com.arkivanov.mvikotlin.utils.internal.atomic
+import com.arkivanov.mvikotlin.utils.internal.initialize
+import com.arkivanov.mvikotlin.utils.internal.requireValue
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
@@ -13,7 +15,12 @@ import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import timber.log.Timber
-import java.util.concurrent.atomic.AtomicReference
+
+typealias SuspendIntentExecutor<Intent, State, Result, Label> =
+    SuspendDelegationExecutor<Intent, Nothing, State, Result, Label>
+
+typealias SuspendActionExecutor<Action, State, Result, Label> =
+    SuspendDelegationExecutor<Nothing, Action, State, Result, Label>
 
 open class SuspendDelegationExecutor<in Intent : Any, in Action : Any, in State : Any, Result : Any, Label : Any>(
     private val dispatchersProvider: DispatchersProvider,
@@ -21,8 +28,8 @@ open class SuspendDelegationExecutor<in Intent : Any, in Action : Any, in State 
     private val actionDelegates: Set<ActionExecutorDelegate<Action, State, Result, Label>> = emptySet()
 ) : Executor<Intent, Action, State, Result, Label> {
 
-    private val callbacks = AtomicReference<Executor.Callbacks<State, Result, Label>>()
-    private val getState: () -> State = { callbacks.get().state }
+    private val callbacks = atomic<Executor.Callbacks<State, Result, Label>>()
+    private val getState: () -> State = { callbacks.requireValue().state }
     private val errorHandler: CoroutineExceptionHandler = CoroutineExceptionHandler { _, e ->
         onErrorOccur(e)
     }
@@ -31,17 +38,16 @@ open class SuspendDelegationExecutor<in Intent : Any, in Action : Any, in State 
     )
 
     final override fun init(callbacks: Executor.Callbacks<State, Result, Label>) {
-        this.callbacks.set(callbacks)
+        this.callbacks.initialize(callbacks)
     }
 
     final override fun handleIntent(intent: Intent) {
+        val executor = this
         scope.launch {
             intentDelegates.forEach {
                 it.executeIntent(
                     intent,
-                    getState,
-                    { result -> dispatch(result) },
-                    { label -> publish(label) }
+                    executor
                 )
             }
             executeIntent(intent, getState)
@@ -60,13 +66,12 @@ open class SuspendDelegationExecutor<in Intent : Any, in Action : Any, in State 
     }
 
     final override fun handleAction(action: Action) {
+        val executor = this
         scope.launch {
             actionDelegates.forEach {
                 it.executeAction(
                     action,
-                    getState,
-                    { result -> dispatch(result) },
-                    { label -> publish(label) }
+                    executor
                 )
             }
             executeAction(action, getState)
@@ -95,7 +100,7 @@ open class SuspendDelegationExecutor<in Intent : Any, in Action : Any, in State 
      * @param result a `Result` to be dispatched to the `Reducer`
      */
     protected suspend fun dispatch(result: Result) = withContext(dispatchersProvider.main) {
-        callbacks.get().onResult(result)
+        callbacks.requireValue().onResult(result)
     }
 
     /**
@@ -104,7 +109,7 @@ open class SuspendDelegationExecutor<in Intent : Any, in Action : Any, in State 
      * @param label a `Label` to be published
      */
     protected suspend fun publish(label: Label) = withContext(dispatchersProvider.main) {
-        callbacks.get().onLabel(label)
+        callbacks.requireValue().onLabel(label)
     }
 
     protected open fun onErrorOccur(throwable: Throwable) {

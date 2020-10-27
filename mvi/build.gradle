@@ -13,6 +13,10 @@ dependencies {
     api dep('com.arkivanov.mvikotlin:mvikotlin-main')
     api dep('com.arkivanov.mvikotlin:rx')
     api dep('com.arkivanov.mvikotlin:rx-internal')
+    implementation dep('com.arkivanov.mvikotlin:utils-internal')
+
+    // Timber
+    api dep('com.jakewharton.timber:timber')
 
     // Dagger2
     implementation dep('com.google.dagger:dagger')

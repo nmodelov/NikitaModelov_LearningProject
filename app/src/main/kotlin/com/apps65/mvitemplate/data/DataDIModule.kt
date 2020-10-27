@@ -2,7 +2,7 @@ package com.apps65.mvitemplate.data
 
 import android.content.Context
 import android.content.SharedPreferences
-import com.apps65.mvitemplate.common.DispatchersProvider
+import com.apps65.mvi.common.DispatchersProvider
 import com.apps65.netutils.NetUtils
 import com.apps65.netutils.connection.ConnectionService
 import dagger.Module

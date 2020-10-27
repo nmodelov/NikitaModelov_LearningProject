@@ -1,12 +1,12 @@
 package com.apps65.mvitemplate.domain.blank.store
 
-import com.apps65.mvitemplate.common.DispatchersProvider
+import com.apps65.mvi.common.DispatchersProvider
+import com.apps65.mvi.common.SuspendDelegationExecutor
 import com.apps65.mvitemplate.domain.blank.store.BlankStore.Action
 import com.apps65.mvitemplate.domain.blank.store.BlankStore.Intent
 import com.apps65.mvitemplate.domain.blank.store.BlankStore.Label
 import com.apps65.mvitemplate.domain.blank.store.BlankStore.State
 import com.apps65.mvitemplate.domain.blank.store.BlankStoreFactory.Result
-import com.apps65.mvitemplate.domain.common.SuspendDelegationExecutor
 import com.arkivanov.mvikotlin.core.store.Executor
 import javax.inject.Inject
 

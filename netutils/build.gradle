@@ -2,6 +2,8 @@ apply plugin: 'com.android.library'
 apply from : '../android.module.gradle'
 
 dependencies {
+    api dep('org.jetbrains.kotlinx:kotlinx-coroutines-core')
+
     // OkHttp
     api dep('com.squareup.okhttp3:okhttp')
     implementation dep('com.squareup.okhttp3:logging-interceptor')

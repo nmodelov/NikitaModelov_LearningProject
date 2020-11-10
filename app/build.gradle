@@ -25,6 +25,7 @@ dependencies {
 
     api project(':netutils')
     api project(':mvi')
+    api project(':mvicoroutines')
 
     // MVI Kotlin
     implementation dep('com.arkivanov.mvikotlin:mvikotlin')

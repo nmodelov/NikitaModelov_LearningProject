@@ -1,3 +1,4 @@
+include ':mvicoroutines'
 include ':mvi'
 include ':netutils'
 include ':app'

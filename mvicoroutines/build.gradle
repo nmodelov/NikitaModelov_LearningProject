@@ -1,0 +1,17 @@
+apply plugin: 'com.android.library'
+apply from : '../android.module.gradle'
+
+dependencies {
+    api dep('org.jetbrains.kotlinx:kotlinx-coroutines-core')
+    api dep('org.jetbrains.kotlinx:kotlinx-coroutines-android')
+
+    // MVI Kotlin
+    api dep('com.arkivanov.mvikotlin:mvikotlin')
+    api dep('com.arkivanov.mvikotlin:mvikotlin-main')
+    api dep('com.arkivanov.mvikotlin:rx')
+    api dep('com.arkivanov.mvikotlin:rx-internal')
+    implementation dep('com.arkivanov.mvikotlin:utils-internal')
+
+    // Timber
+    api dep('com.jakewharton.timber:timber')
+}

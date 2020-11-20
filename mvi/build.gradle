@@ -18,10 +18,6 @@ dependencies {
     // Timber
     api dep('com.jakewharton.timber:timber')
 
-    // Dagger2
-    implementation dep('com.google.dagger:dagger')
-    implementation dep('com.google.dagger:dagger-android')
-    implementation dep('com.google.dagger:dagger-android-support')
-    kapt dep('com.google.dagger:dagger-compiler')
-    kapt dep('com.google.dagger:dagger-android-processor')
+    api dep('androidx.appcompat:appcompat')
+    api dep('javax.inject:javax.inject')
 }

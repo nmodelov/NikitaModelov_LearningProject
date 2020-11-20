@@ -43,6 +43,7 @@ ext {
             'com.google.dagger:dagger-android-support'               : daggerVersion,
             'com.google.dagger:dagger-compiler'                      : daggerVersion,
             'com.google.dagger:dagger-android-processor'             : daggerVersion,
+            'javax.inject:javax.inject'                              : '1',
 
             // Utils
             'com.jakewharton.timber:timber'                          : '4.7.1',

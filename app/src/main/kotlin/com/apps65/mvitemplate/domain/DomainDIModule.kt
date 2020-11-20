@@ -1,20 +1,18 @@
 package com.apps65.mvitemplate.domain
 
 import com.apps65.mvi.store.UnicastStoreFactory
-import com.apps65.mvitemplate.domain.blank.BlankDIModule
-import com.apps65.mvitemplate.domain.main.MainDIModule
 import com.arkivanov.mvikotlin.core.store.StoreFactory
 import dagger.Module
 import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ActivityRetainedComponent
+import dagger.hilt.android.scopes.ActivityRetainedScoped
 
-@Module(includes = [DomainDIModule.Declarations::class, BlankDIModule::class, MainDIModule::class])
+@Module
+@InstallIn(ActivityRetainedComponent::class)
 object DomainDIModule {
 
     @Provides
+    @ActivityRetainedScoped
     internal fun provideStoreFactory(): StoreFactory = UnicastStoreFactory
-
-    @Module
-    internal interface Declarations {
-        // TBD
-    }
 }

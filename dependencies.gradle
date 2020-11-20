@@ -1,31 +1,30 @@
 ext {
-    daggerVersion = '2.26'
+    daggerVersion = '2.29.1'
     retrofitVersion = '2.9.0'
     okhttpVersion = '4.3.1'
     mviKotlinVersion = '2.0.0'
     coroutinesVersion = '1.4.0'
-    lifecycle_version = '2.2.0'
-    spek_version = '2.0.12'
-    mannodermaus_version = '1.2.0'
-    androidx_test = '1.3.0'
-
+    lifecycleVersion = '2.2.0'
+    spekVersion = '2.0.12'
+    mannodermausVersion = '1.2.0'
+    androidxTest = '1.3.0'
     depsWithVersion = [
             // Kotlin
-            'org.jetbrains.kotlin:kotlin-stdlib'                     : kotlin_version,
+            'org.jetbrains.kotlin:kotlin-stdlib'                     : kotlinVersion,
             'org.jetbrains.kotlinx:kotlinx-coroutines-core'          : coroutinesVersion,
             'org.jetbrains.kotlinx:kotlinx-coroutines-android'       : coroutinesVersion,
             'org.jetbrains.kotlinx:kotlinx-coroutines-test'          : coroutinesVersion,
-            'org.jetbrains.kotlin:kotlin-stdlib-jdk8'                : kotlin_version,
+            'org.jetbrains.kotlin:kotlin-stdlib-jdk8'                : kotlinVersion,
 
             // Android
             'androidx.core:core-ktx'                                 : '1.3.0',
             'androidx.appcompat:appcompat'                           : '1.1.0',
             'androidx.constraintlayout:constraintlayout'             : '1.1.3',
             'com.google.android.material:material'                   : '1.1.0',
-            'androidx.lifecycle:lifecycle-viewmodel-ktx'             : lifecycle_version,
-            'androidx.lifecycle:lifecycle-runtime'                   : lifecycle_version,
-            'androidx.lifecycle:lifecycle-common-java8'              : lifecycle_version,
-            'androidx.lifecycle:lifecycle-livedata-ktx'              : lifecycle_version,
+            'androidx.lifecycle:lifecycle-viewmodel-ktx'             : lifecycleVersion,
+            'androidx.lifecycle:lifecycle-runtime'                   : lifecycleVersion,
+            'androidx.lifecycle:lifecycle-common-java8'              : lifecycleVersion,
+            'androidx.lifecycle:lifecycle-livedata-ktx'              : lifecycleVersion,
 
             // RxJava2
             'io.reactivex.rxjava2:rxjava'                            : '2.2.16',
@@ -39,10 +38,10 @@ ext {
 
             // DI
             'com.google.dagger:dagger'                               : daggerVersion,
-            'com.google.dagger:dagger-android'                       : daggerVersion,
-            'com.google.dagger:dagger-android-support'               : daggerVersion,
             'com.google.dagger:dagger-compiler'                      : daggerVersion,
-            'com.google.dagger:dagger-android-processor'             : daggerVersion,
+            'com.google.dagger:hilt-android'                         : hiltVersion,
+            'com.google.dagger:hilt-android-compiler'                : hiltVersion,
+            'com.google.dagger:hilt-android-testing'                 : hiltVersion,
             'javax.inject:javax.inject'                              : '1',
 
             // Utils
@@ -61,10 +60,10 @@ ext {
             'junit:junit'                                            : '4.13',
             'androidx.test.ext:junit'                                : '1.1.2',
             'androidx.test.espresso:espresso-core'                   : '3.3.0',
-            'androidx.test:core'                                     : androidx_test,
-            'androidx.test:runner'                                   : androidx_test,
-            'androidx.test:orchestrator'                             : androidx_test,
-            'androidx.test:rules'                                    : androidx_test,
+            'androidx.test:core'                                     : androidxTest,
+            'androidx.test:runner'                                   : androidxTest,
+            'androidx.test:orchestrator'                             : androidxTest,
+            'androidx.test:rules'                                    : androidxTest,
 
             // MVI Kotlin
             'com.arkivanov.mvikotlin:mvikotlin'                      : mviKotlinVersion,
@@ -84,19 +83,20 @@ ext {
             'androidx.preference:preference-ktx'                     : '1.1.1',
 
             // assertion
-            'org.jetbrains.kotlin:kotlin-test'                       : kotlin_version,
+            'org.jetbrains.kotlin:kotlin-test'                       : kotlinVersion,
             'org.assertj:assertj-core'                               : '2.9.1',
 
             // spek2
-            'org.spekframework.spek2:spek-dsl-jvm'                   : spek_version,
-            'org.spekframework.spek2:spek-runner-junit5'             : spek_version,
-            'org.jetbrains.kotlin:kotlin-reflect'                    : kotlin_version,
+            'org.spekframework.spek2:spek-dsl-jvm'                   : spekVersion,
+            'org.spekframework.spek2:spek-runner-junit5'             : spekVersion,
+            'org.jetbrains.kotlin:kotlin-reflect'                    : kotlinVersion,
 
-            'de.mannodermaus.junit5:android-test-core'               : mannodermaus_version,
-            'de.mannodermaus.junit5:android-test-runner'             : mannodermaus_version,
+            'de.mannodermaus.junit5:android-test-core'               : mannodermausVersion,
+            'de.mannodermaus.junit5:android-test-runner'             : mannodermausVersion,
             'com.kaspersky.android-components:kaspresso'             : '1.2.0',
             'io.mockk:mockk'                                         : '1.10.2'
     ]
+
 
     dep = { String key ->
         def version = depsWithVersion[key]

@@ -7,19 +7,14 @@ import com.apps65.mvitemplate.presentation.navigation.AppRouter
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
-import dagger.android.AndroidInjectionModule
+import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ApplicationComponent
 import ru.terrakok.cicerone.Cicerone
 import ru.terrakok.cicerone.Router
 import javax.inject.Singleton
 
-@Module(
-    includes = [
-        AndroidInjectionModule::class,
-        ActivityDIModule::class,
-        FragmentDIModule::class,
-        PresentationDIModule.Declarations::class
-    ]
-)
+@Module
+@InstallIn(ApplicationComponent::class)
 object PresentationDIModule {
     @Provides
     @Singleton
@@ -36,6 +31,7 @@ object PresentationDIModule {
     internal fun provideNavigatorHolder(cicerone: Cicerone<AppRouter>) = cicerone.navigatorHolder
 
     @Module
+    @InstallIn(ApplicationComponent::class)
     internal interface Declarations {
         @Binds
         fun bindStateKeeper(impl: SavedStateKeeperImpl): SavedStateKeeper

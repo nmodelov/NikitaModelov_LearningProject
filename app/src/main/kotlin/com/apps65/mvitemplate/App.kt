@@ -1,33 +1,16 @@
 package com.apps65.mvitemplate
 
 import android.app.Application
-import com.apps65.mvi.common.DispatchersProviderImpl
-import dagger.android.AndroidInjector
-import dagger.android.DispatchingAndroidInjector
-import dagger.android.HasAndroidInjector
+import dagger.hilt.android.HiltAndroidApp
 import timber.log.Timber
 import timber.log.Timber.DebugTree
-import javax.inject.Inject
 
-class App : Application(), HasAndroidInjector {
-
-    @Inject
-    lateinit var androidInjector: DispatchingAndroidInjector<Any>
-
-    override fun androidInjector(): AndroidInjector<Any> = androidInjector
+@HiltAndroidApp
+class App : Application() {
 
     override fun onCreate() {
         super.onCreate()
         initLogging()
-        initDI()
-    }
-
-    private fun initDI() {
-        val appComponent = DaggerAppDIComponent.builder()
-            .application(this)
-            .dispatchers(DispatchersProviderImpl)
-            .build()
-        appComponent.inject(this)
     }
 
     private fun initLogging() {

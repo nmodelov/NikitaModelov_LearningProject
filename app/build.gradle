@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'dagger.hilt.android.plugin'
 apply from : '../android.module.gradle'
 
 android {
@@ -12,11 +13,12 @@ android {
     }
 }
 
+kapt {
+    correctErrorTypes true
+}
+
 dependencies {
-    implementation dep('androidx.core:core-ktx')
-    implementation dep('androidx.appcompat:appcompat')
     implementation dep('com.google.android.material:material')
-    implementation dep('androidx.constraintlayout:constraintlayout')
 
     androidTestImplementation dep('com.kaspersky.android-components:kaspresso')
 
@@ -27,19 +29,20 @@ dependencies {
     api project(':mvi')
     api project(':mvicoroutines')
 
-    // MVI Kotlin
-    implementation dep('com.arkivanov.mvikotlin:mvikotlin')
-    implementation dep('com.arkivanov.mvikotlin:mvikotlin-main')
-    implementation dep('com.arkivanov.mvikotlin:mvikotlin-extensions-coroutines')
     // Spek2 plugin classpath fix
     testImplementation dep('com.arkivanov.mvikotlin:utils-internal')
 
     // Dagger2
-    implementation dep('com.google.dagger:dagger')
-    implementation dep('com.google.dagger:dagger-android')
-    implementation dep('com.google.dagger:dagger-android-support')
-    kapt dep('com.google.dagger:dagger-compiler')
-    kapt dep('com.google.dagger:dagger-android-processor')
+    implementation dep('com.google.dagger:hilt-android')
+    kapt dep('com.google.dagger:hilt-android-compiler')
+
+    // For instrumentation tests
+    androidTestImplementation  dep('com.google.dagger:hilt-android-testing')
+    kaptAndroidTest dep('com.google.dagger:hilt-android-compiler')
+
+    // For local unit tests
+    testImplementation dep('com.google.dagger:hilt-android-testing')
+    kaptTest dep('com.google.dagger:hilt-android-compiler')
 
     // Cicerone
     implementation dep('ru.terrakok.cicerone:cicerone')

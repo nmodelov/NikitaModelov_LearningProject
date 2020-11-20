@@ -11,6 +11,7 @@ dependencies {
     api dep('com.arkivanov.mvikotlin:rx')
     api dep('com.arkivanov.mvikotlin:rx-internal')
     implementation dep('com.arkivanov.mvikotlin:utils-internal')
+    api dep('com.arkivanov.mvikotlin:mvikotlin-extensions-coroutines')
 
     // Timber
     api dep('com.jakewharton.timber:timber')

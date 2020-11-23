@@ -8,13 +8,13 @@ import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ApplicationComponent
+import dagger.hilt.components.SingletonComponent
 import ru.terrakok.cicerone.Cicerone
 import ru.terrakok.cicerone.Router
 import javax.inject.Singleton
 
 @Module
-@InstallIn(ApplicationComponent::class)
+@InstallIn(SingletonComponent::class)
 object PresentationDIModule {
     @Provides
     @Singleton
@@ -31,7 +31,7 @@ object PresentationDIModule {
     internal fun provideNavigatorHolder(cicerone: Cicerone<AppRouter>) = cicerone.navigatorHolder
 
     @Module
-    @InstallIn(ApplicationComponent::class)
+    @InstallIn(SingletonComponent::class)
     internal interface Declarations {
         @Binds
         fun bindStateKeeper(impl: SavedStateKeeperImpl): SavedStateKeeper

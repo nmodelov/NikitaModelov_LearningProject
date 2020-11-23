@@ -71,6 +71,8 @@ android {
     }
 }
 
+androidExtensions { features = ['parcelize'] }
+
 dependencies {
     implementation dep('org.jetbrains.kotlin:kotlin-stdlib')
 

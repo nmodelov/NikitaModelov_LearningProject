@@ -26,6 +26,7 @@ internal class ExecutorsFactory @Inject constructor(
             override suspend fun executeIntent(intent: Intent, getState: () -> State) {
                 when (intent) {
                     is Intent.Increment -> executeIncrement()
+                    Intent.OnResult -> publish(Label.Result((getState() as State.Blank).blankCount))
                 }
             }
 

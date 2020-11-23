@@ -7,5 +7,6 @@ interface BlankView : BaseView<BlankView.Model, BlankView.Event> {
 
     sealed class Event {
         object OnBlankClick : Event()
+        object OnResultClick : Event()
     }
 }

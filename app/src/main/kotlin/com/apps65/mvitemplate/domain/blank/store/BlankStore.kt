@@ -11,6 +11,7 @@ interface BlankStore : Store<Intent, State, Label> {
 
     sealed class Intent {
         object Increment : Intent()
+        object OnResult : Intent()
     }
 
     sealed class Action {
@@ -23,6 +24,8 @@ interface BlankStore : Store<Intent, State, Label> {
     }
 
     sealed class Label {
+        data class Result(val count: Int) : Label()
+
         object Blank : Label()
     }
 }

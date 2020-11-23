@@ -8,8 +8,13 @@ class BlankViewImpl(binding: () -> FragmentBlankBinding) :
     BindingView<FragmentBlankBinding, BlankView.Model, BlankView.Event>(binding), BlankView {
 
     init {
-        binding().blankButton.setOnClickListener {
-            dispatch(BlankView.Event.OnBlankClick)
+        with(binding()) {
+            blankButton.setOnClickListener {
+                dispatch(BlankView.Event.OnBlankClick)
+            }
+            resultButton.setOnClickListener {
+                dispatch(BlankView.Event.OnResultClick)
+            }
         }
     }
 

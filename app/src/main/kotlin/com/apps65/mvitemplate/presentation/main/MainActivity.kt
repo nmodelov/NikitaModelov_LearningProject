@@ -31,8 +31,8 @@ class MainActivity : BaseActivity<MainView>() {
     private var navigator = AppNavigator(this, R.id.content)
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        stateBundleKeeper.restoreState(savedInstanceState)
         super.onCreate(savedInstanceState)
+        stateBundleKeeper.restoreState(savedInstanceState)
         setContentView(binding.root)
         val mainView = MainViewImpl()
         binder.onViewCreated(mainView)

@@ -6,18 +6,19 @@ import com.apps65.netutils.connection.FlowConnectionService
 import kotlinx.coroutines.CoroutineDispatcher
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import timber.log.Timber
 
 object NetUtils {
     fun provideOkHttp(apply: ((OkHttpClient.Builder) -> Unit) = {}): OkHttpClient {
         return OkHttpClient.Builder()
             .apply(apply)
             .addInterceptor(
-                HttpLoggingInterceptor().apply {
-                    level = if (BuildConfig.DEBUG) {
-                        HttpLoggingInterceptor.Level.BODY
-                    } else {
-                        HttpLoggingInterceptor.Level.BASIC
+                HttpLoggingInterceptor(object : HttpLoggingInterceptor.Logger {
+                    override fun log(message: String) {
+                        Timber.d(message)
                     }
+                }).apply {
+                    level = HttpLoggingInterceptor.Level.BODY
                 }
             )
             .build()

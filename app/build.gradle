@@ -11,6 +11,11 @@ android {
         versionName rootProject.ext.versionName
         setProperty('archivesBaseName', "mvitemplate-${formattedDate}.v${defaultConfig.versionName}")
     }
+
+    buildFeatures {
+        viewBinding = true
+        buildConfig = true
+    }
 }
 
 kapt {
@@ -49,7 +54,4 @@ dependencies {
 
     // Preference
     implementation dep('androidx.preference:preference-ktx')
-
-    // Timber
-    implementation dep('com.jakewharton.timber:timber')
 }

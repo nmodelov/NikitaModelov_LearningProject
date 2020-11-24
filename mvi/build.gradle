@@ -15,9 +15,6 @@ dependencies {
     api dep('com.arkivanov.mvikotlin:rx-internal')
     implementation dep('com.arkivanov.mvikotlin:utils-internal')
 
-    // Timber
-    api dep('com.jakewharton.timber:timber')
-
     api dep('androidx.appcompat:appcompat')
     api dep('javax.inject:javax.inject')
 }

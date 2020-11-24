@@ -34,7 +34,10 @@ android {
         freeCompilerArgs += '-Xopt-in=kotlin.RequiresOptIn'
     }
 
-    buildFeatures.viewBinding = true
+    buildFeatures {
+        viewBinding = true
+        buildConfig = false
+    }
 
     lintOptions {
         checkGeneratedSources = true // keep it true, otherwise lint will mark activitie's
@@ -91,4 +94,7 @@ dependencies {
     testImplementation dep('org.jetbrains.kotlinx:kotlinx-coroutines-test')
 
     androidTestImplementation dep('androidx.test.ext:junit')
+
+    // Timber
+    api dep('com.jakewharton.timber:timber')
 }

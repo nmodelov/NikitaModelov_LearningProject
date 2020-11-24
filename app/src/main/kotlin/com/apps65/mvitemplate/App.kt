@@ -17,7 +17,11 @@ class App : Application() {
         if (BuildConfig.DEBUG) {
             Timber.plant(DebugTree())
         } else {
-            TODO("Plant a tree for production")
+            Timber.plant(object : Timber.Tree() {
+                override fun log(priority: Int, tag: String?, message: String, t: Throwable?) {
+                    //add custom logic
+                }
+            })
         }
     }
 }

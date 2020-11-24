@@ -5,7 +5,7 @@ import com.apps65.mvitemplate.domain.main.store.MainStore.Intent
 import com.apps65.mvitemplate.domain.main.store.MainStore.Label
 import com.apps65.mvitemplate.domain.main.store.MainStore.State
 import com.arkivanov.mvikotlin.core.store.Store
-import kotlinx.android.parcel.Parcelize
+import kotlinx.parcelize.Parcelize
 
 interface MainStore : Store<Intent, State, Label> {
 

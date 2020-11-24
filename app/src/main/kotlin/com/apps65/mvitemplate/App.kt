@@ -19,7 +19,7 @@ class App : Application() {
         } else {
             Timber.plant(object : Timber.Tree() {
                 override fun log(priority: Int, tag: String?, message: String, t: Throwable?) {
-                    //add custom logic
+                    // add custom logic
                 }
             })
         }

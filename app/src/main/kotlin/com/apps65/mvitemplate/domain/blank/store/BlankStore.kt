@@ -5,7 +5,7 @@ import com.apps65.mvitemplate.domain.blank.store.BlankStore.Intent
 import com.apps65.mvitemplate.domain.blank.store.BlankStore.Label
 import com.apps65.mvitemplate.domain.blank.store.BlankStore.State
 import com.arkivanov.mvikotlin.core.store.Store
-import kotlinx.android.parcel.Parcelize
+import kotlinx.parcelize.Parcelize
 
 interface BlankStore : Store<Intent, State, Label> {
 

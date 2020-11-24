@@ -1,5 +1,5 @@
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-parcelize'
 apply plugin: 'kotlin-kapt'
 
 apply plugin: 'de.mannodermaus.android-junit5'
@@ -73,8 +73,6 @@ android {
         exclude 'META-INF/LICENSE*'
     }
 }
-
-androidExtensions { features = ['parcelize'] }
 
 dependencies {
     implementation dep('org.jetbrains.kotlin:kotlin-stdlib')

@@ -1,18 +1,19 @@
 package com.apps65.mvitemplate.presentation.blankresult
 
 import com.apps65.mvi.Binder
+import com.apps65.mvi.common.DispatchersProvider
 import com.apps65.mvitemplate.domain.blankresult.store.BlankResultStore
 import com.arkivanov.mvikotlin.core.binder.BinderLifecycleMode
 import com.arkivanov.mvikotlin.core.lifecycle.doOnDestroy
 import com.arkivanov.mvikotlin.extensions.coroutines.bind
 import com.arkivanov.mvikotlin.extensions.coroutines.states
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class BlankResultBinder @Inject constructor(
-    private val blankStore: BlankResultStore
+    private val blankStore: BlankResultStore,
+    private val dispatchersProvider: DispatchersProvider
 ) : Binder<BlankResultView>() {
     init {
         binderLifecycle.doOnDestroy(blankStore::dispose)
@@ -20,7 +21,7 @@ class BlankResultBinder @Inject constructor(
 
     @OptIn(ExperimentalCoroutinesApi::class)
     override fun onViewCreated(view: BlankResultView) {
-        val mainContext = Dispatchers.Main.immediate
+        val mainContext = dispatchersProvider.main
 
         // обновление интерфейса и навигация
         bind(viewLifecycle, BinderLifecycleMode.START_STOP, mainContext) {

@@ -1,6 +1,7 @@
 package com.apps65.mvitemplate.presentation.main
 
 import com.apps65.mvi.Binder
+import com.apps65.mvi.common.DispatchersProvider
 import com.apps65.mvitemplate.domain.main.store.MainStore
 import com.apps65.mvitemplate.presentation.blank.BlankScreen
 import com.arkivanov.mvikotlin.core.binder.BinderLifecycleMode
@@ -8,7 +9,6 @@ import com.arkivanov.mvikotlin.core.lifecycle.doOnDestroy
 import com.arkivanov.mvikotlin.extensions.coroutines.bind
 import com.arkivanov.mvikotlin.extensions.coroutines.events
 import com.arkivanov.mvikotlin.extensions.coroutines.labels
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.map
 import ru.terrakok.cicerone.Router
@@ -17,7 +17,8 @@ import javax.inject.Inject
 @OptIn(ExperimentalCoroutinesApi::class)
 class MainBinder @Inject constructor(
     private val mainStore: MainStore,
-    private val router: Router
+    private val router: Router,
+    private val dispatchersProvider: DispatchersProvider
 ) : Binder<MainView>() {
 
     init {
@@ -25,7 +26,7 @@ class MainBinder @Inject constructor(
     }
 
     override fun onViewCreated(view: MainView) {
-        bind(viewLifecycle, BinderLifecycleMode.CREATE_DESTROY, Dispatchers.Main.immediate) {
+        bind(viewLifecycle, BinderLifecycleMode.CREATE_DESTROY, dispatchersProvider.main) {
             mainStore.labels bindTo { handelLabel(it) }
             view.events.map(eventToIntent) bindTo mainStore
         }

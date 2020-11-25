@@ -17,8 +17,9 @@ abstract class Binder<V : BaseView<*, *>> : ViewModel() {
 
     val viewLifecycle: Lifecycle
         get() {
-            viewLifecycleRegistry = viewLifecycleRegistry ?: LifecycleRegistry()
-            return viewLifecycleRegistry!!
+            return viewLifecycleRegistry ?: LifecycleRegistry().apply {
+                viewLifecycleRegistry = this
+            }
         }
 
     init {

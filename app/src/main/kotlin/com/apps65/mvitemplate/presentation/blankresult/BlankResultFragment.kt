@@ -1,7 +1,5 @@
 package com.apps65.mvitemplate.presentation.blankresult
 
-import android.os.Bundle
-import android.view.View
 import androidx.core.os.bundleOf
 import com.apps65.mvi.BaseFragment
 import com.apps65.mvi.binding.viewBinding
@@ -33,11 +31,6 @@ class BlankResultFragment : BaseFragment<BlankResultView>(R.layout.fragment_resu
         val component = componentBuilder.bindArgs(Args(count)).build()
         EntryPoints.get(component, FeatureEntryPoint::class.java).getBinder()
     }
-
+    override val viewImpl by lazy(mode = LazyThreadSafetyMode.NONE) { BlankResultViewImpl(::binding) }
     private val binding by viewBinding(FragmentResultBinding::bind)
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        binder.onViewCreated(BlankResultViewImpl(::binding))
-    }
 }

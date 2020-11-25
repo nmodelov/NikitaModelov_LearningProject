@@ -6,10 +6,12 @@ import androidx.appcompat.app.AppCompatActivity
 
 abstract class BaseActivity<V : BaseView<*, *>> : AppCompatActivity() {
     abstract val binder: Binder<V>
+    abstract val viewImpl: V
 
     @CallSuper
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         MviLifecycleObserver(binder, this)
+        binder.onViewCreated(viewImpl)
     }
 }

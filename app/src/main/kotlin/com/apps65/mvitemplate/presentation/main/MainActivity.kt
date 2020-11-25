@@ -23,6 +23,7 @@ class MainActivity : BaseActivity<MainView>() {
     lateinit var binderProvider: Provider<MainBinder>
 
     override val binder by viewModelFrom { binderProvider }
+    override val viewImpl by lazy(mode = LazyThreadSafetyMode.NONE) { MainViewImpl() }
     private val binding by viewBinding(ActivityMainBinding::inflate)
 
     @Inject
@@ -34,8 +35,6 @@ class MainActivity : BaseActivity<MainView>() {
         super.onCreate(savedInstanceState)
         stateBundleKeeper.restoreState(savedInstanceState)
         setContentView(binding.root)
-        val mainView = MainViewImpl()
-        binder.onViewCreated(mainView)
     }
 
     override fun onResumeFragments() {

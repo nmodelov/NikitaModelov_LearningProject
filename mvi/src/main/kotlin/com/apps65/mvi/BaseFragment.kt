@@ -8,10 +8,12 @@ import androidx.fragment.app.Fragment
 
 abstract class BaseFragment<V : BaseView<*, *>>(@LayoutRes layoutId: Int) : Fragment(layoutId) {
     abstract val binder: Binder<V>
+    abstract val viewImpl: V
 
     @CallSuper
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         MviLifecycleObserver(binder, viewLifecycleOwner)
+        binder.onViewCreated(viewImpl)
     }
 }

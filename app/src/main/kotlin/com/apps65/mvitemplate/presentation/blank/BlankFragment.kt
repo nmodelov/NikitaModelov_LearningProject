@@ -1,7 +1,5 @@
 package com.apps65.mvitemplate.presentation.blank
 
-import android.os.Bundle
-import android.view.View
 import com.apps65.mvi.BaseFragment
 import com.apps65.mvi.binding.viewBinding
 import com.apps65.mvi.viewModelFrom
@@ -22,11 +20,7 @@ class BlankFragment : BaseFragment<BlankView>(R.layout.fragment_blank) {
     lateinit var binderProvider: Provider<BlankBinder>
 
     override val binder by viewModelFrom { binderProvider }
+    override val viewImpl by lazy(mode = LazyThreadSafetyMode.NONE) { BlankViewImpl(::binding) }
 
     private val binding by viewBinding(FragmentBlankBinding::bind)
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        binder.onViewCreated(BlankViewImpl(::binding))
-    }
 }

@@ -1,7 +1,9 @@
 apply plugin: 'com.android.library'
-apply from : '../android.module.gradle'
+apply from: '../android.module.gradle'
 
 dependencies {
+    api project(":mvi")
+
     api dep('org.jetbrains.kotlinx:kotlinx-coroutines-core')
     api dep('org.jetbrains.kotlinx:kotlinx-coroutines-android')
 

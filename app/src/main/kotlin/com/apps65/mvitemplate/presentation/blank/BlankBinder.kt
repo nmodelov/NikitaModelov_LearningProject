@@ -1,63 +1,46 @@
 package com.apps65.mvitemplate.presentation.blank
 
-import com.apps65.mvi.Binder
+import com.apps65.mvi.DefaultBinder
 import com.apps65.mvi.common.DispatchersProvider
 import com.apps65.mvitemplate.domain.blank.store.BlankStore
+import com.apps65.mvitemplate.domain.blank.store.BlankStore.Intent
+import com.apps65.mvitemplate.domain.blank.store.BlankStore.Label
+import com.apps65.mvitemplate.domain.blank.store.BlankStore.State
+import com.apps65.mvitemplate.presentation.blank.BlankView.Event
+import com.apps65.mvitemplate.presentation.blank.BlankView.Model
 import com.apps65.mvitemplate.presentation.blankresult.blankResultScreen
-import com.arkivanov.mvikotlin.core.binder.BinderLifecycleMode
-import com.arkivanov.mvikotlin.core.lifecycle.doOnDestroy
-import com.arkivanov.mvikotlin.extensions.coroutines.bind
-import com.arkivanov.mvikotlin.extensions.coroutines.events
-import com.arkivanov.mvikotlin.extensions.coroutines.labels
-import com.arkivanov.mvikotlin.extensions.coroutines.states
 import com.github.terrakok.cicerone.Router
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.map
 import timber.log.Timber
 import javax.inject.Inject
 
+/**
+ * Binder which uses Model for representing model State and Event for representing Intent
+ */
 class BlankBinder @Inject constructor(
-    private val blankStore: BlankStore,
+    blankStore: BlankStore,
+    dispatchersProvider: DispatchersProvider,
     private val router: Router,
-    private val dispatchersProvider: DispatchersProvider
-) : Binder<BlankView>() {
-    init {
-        binderLifecycle.doOnDestroy(blankStore::dispose)
-    }
-
-    @OptIn(ExperimentalCoroutinesApi::class)
-    override fun onViewCreated(view: BlankView) {
-        val mainContext = dispatchersProvider.main
-
-        // обновление интерфейса и навигация
-        bind(viewLifecycle, BinderLifecycleMode.START_STOP, mainContext) {
-            blankStore.states.map(stateToModel) bindTo view
-            blankStore.labels bindTo { handleLabel(it) }
-        }
-
-        // команды от view-controller, диапазон шире т.к. возможно что-то типа onActivityResult
-        bind(viewLifecycle, BinderLifecycleMode.CREATE_DESTROY, mainContext) {
-            view.events.map(eventToIntent) bindTo blankStore
-        }
-    }
-
-    private fun handleLabel(label: BlankStore.Label) {
+) : DefaultBinder<Intent, State, Label, Event, Model, BlankView>(
+    blankStore,
+    dispatchersProvider
+) {
+    override fun handleLabel(label: Label) {
         when (label) {
-            BlankStore.Label.Blank -> Timber.i("$label has been received")
-            is BlankStore.Label.Result -> router.replaceScreen(blankResultScreen(label.count))
+            Label.Blank -> Timber.i("$label has been received")
+            is Label.Result -> router.replaceScreen(blankResultScreen(label.count))
         }
     }
 
-    private val stateToModel: suspend (BlankStore.State.() -> BlankView.Model) = {
+    override val stateToModel: suspend (State.() -> Model) = {
         when (this) {
-            is BlankStore.State.Blank -> BlankView.Model(this.blankCount, this.connected)
+            is State.Blank -> Model(this.blankCount, this.connected)
         }
     }
 
-    private val eventToIntent: suspend (BlankView.Event.() -> BlankStore.Intent) = {
+    override val eventToIntent: suspend (Event.() -> Intent) = {
         when (this) {
-            BlankView.Event.OnBlankClick -> BlankStore.Intent.Increment
-            BlankView.Event.OnResultClick -> BlankStore.Intent.OnResult
+            Event.OnBlankClick -> Intent.Increment
+            Event.OnResultClick -> Intent.OnResult
         }
     }
 }

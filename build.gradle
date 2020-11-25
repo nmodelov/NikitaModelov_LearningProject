@@ -36,14 +36,11 @@ allprojects {
         maven {
             url "https://dl.bintray.com/arkivanov/maven"
         }
-        maven {
-            url "https://dl.bintray.com/badoo/maven"
-        }
     }
     project.ext {
-        compileSdkVersion = 29
+        compileSdkVersion = 30
         minSdkVersion = 21
-        targetSdkVersion = 29
+        targetSdkVersion = 30
 
         versionMajor = 1
         versionMinor = 0

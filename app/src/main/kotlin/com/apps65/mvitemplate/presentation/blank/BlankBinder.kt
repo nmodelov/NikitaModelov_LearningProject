@@ -3,16 +3,16 @@ package com.apps65.mvitemplate.presentation.blank
 import com.apps65.mvi.Binder
 import com.apps65.mvi.common.DispatchersProvider
 import com.apps65.mvitemplate.domain.blank.store.BlankStore
-import com.apps65.mvitemplate.presentation.blankresult.BlankResultScreen
+import com.apps65.mvitemplate.presentation.blankresult.blankResultScreen
 import com.arkivanov.mvikotlin.core.binder.BinderLifecycleMode
 import com.arkivanov.mvikotlin.core.lifecycle.doOnDestroy
 import com.arkivanov.mvikotlin.extensions.coroutines.bind
 import com.arkivanov.mvikotlin.extensions.coroutines.events
 import com.arkivanov.mvikotlin.extensions.coroutines.labels
 import com.arkivanov.mvikotlin.extensions.coroutines.states
+import com.github.terrakok.cicerone.Router
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.map
-import ru.terrakok.cicerone.Router
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -44,7 +44,7 @@ class BlankBinder @Inject constructor(
     private fun handleLabel(label: BlankStore.Label) {
         when (label) {
             BlankStore.Label.Blank -> Timber.i("$label has been received")
-            is BlankStore.Label.Result -> router.replaceScreen(BlankResultScreen(label.count))
+            is BlankStore.Label.Result -> router.replaceScreen(blankResultScreen(label.count))
         }
     }
 

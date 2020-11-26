@@ -1,8 +1,7 @@
 package com.apps65.mvitemplate.presentation.blank
 
-import androidx.fragment.app.Fragment
-import ru.terrakok.cicerone.android.support.SupportAppScreen
+import com.github.terrakok.cicerone.androidx.FragmentScreen
 
-object BlankScreen : SupportAppScreen() {
-    override fun getFragment(): Fragment = BlankFragment.newInstance()
+fun blankScreen() = FragmentScreen {
+    BlankFragment.newInstance()
 }

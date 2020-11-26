@@ -8,8 +8,8 @@ import com.apps65.mvi.viewModelFrom
 import com.apps65.mvitemplate.R
 import com.apps65.mvitemplate.databinding.ActivityMainBinding
 import com.apps65.mvitemplate.presentation.navigation.AppNavigator
+import com.github.terrakok.cicerone.NavigatorHolder
 import dagger.hilt.android.AndroidEntryPoint
-import ru.terrakok.cicerone.NavigatorHolder
 import javax.inject.Inject
 import javax.inject.Provider
 

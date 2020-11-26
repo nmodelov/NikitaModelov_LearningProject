@@ -50,7 +50,7 @@ dependencies {
     kaptTest dep('com.google.dagger:hilt-android-compiler')
 
     // Cicerone
-    implementation dep('ru.terrakok.cicerone:cicerone')
+    implementation dep('com.github.terrakok:cicerone')
 
     // Preference
     implementation dep('androidx.preference:preference-ktx')

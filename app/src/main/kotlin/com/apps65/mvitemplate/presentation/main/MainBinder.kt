@@ -3,15 +3,15 @@ package com.apps65.mvitemplate.presentation.main
 import com.apps65.mvi.Binder
 import com.apps65.mvi.common.DispatchersProvider
 import com.apps65.mvitemplate.domain.main.store.MainStore
-import com.apps65.mvitemplate.presentation.blank.BlankScreen
+import com.apps65.mvitemplate.presentation.blank.blankScreen
 import com.arkivanov.mvikotlin.core.binder.BinderLifecycleMode
 import com.arkivanov.mvikotlin.core.lifecycle.doOnDestroy
 import com.arkivanov.mvikotlin.extensions.coroutines.bind
 import com.arkivanov.mvikotlin.extensions.coroutines.events
 import com.arkivanov.mvikotlin.extensions.coroutines.labels
+import com.github.terrakok.cicerone.Router
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.map
-import ru.terrakok.cicerone.Router
 import javax.inject.Inject
 
 @OptIn(ExperimentalCoroutinesApi::class)
@@ -34,7 +34,7 @@ class MainBinder @Inject constructor(
 
     private fun handelLabel(label: MainStore.Label) {
         when (label) {
-            MainStore.Label.Started -> router.newRootScreen(BlankScreen)
+            MainStore.Label.Started -> router.newRootScreen(blankScreen())
         }
     }
 

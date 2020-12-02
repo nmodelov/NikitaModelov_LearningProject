@@ -94,7 +94,9 @@ ext {
             'de.mannodermaus.junit5:android-test-core'               : mannodermausVersion,
             'de.mannodermaus.junit5:android-test-runner'             : mannodermausVersion,
             'com.kaspersky.android-components:kaspresso'             : '1.2.0',
-            'io.mockk:mockk'                                         : '1.10.2'
+            'io.mockk:mockk'                                         : '1.10.2',
+
+            'ru.tinkoff.decoro:decoro'                               : '1.4.1'
     ]
 
 

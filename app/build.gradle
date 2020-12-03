@@ -33,6 +33,7 @@ dependencies {
     api project(':netutils')
     api project(':mvi')
     api project(':mvicoroutines')
+    api project(':commonui')
 
     // Spek2 plugin classpath fix
     testImplementation dep('com.arkivanov.mvikotlin:utils-internal')

@@ -1,7 +1,8 @@
 apply plugin: 'com.android.library'
-apply from : '../android.module.gradle'
+apply from: '../android.module.gradle'
 
 dependencies {
+    implementation dep('androidx.core:core-ktx')
     implementation dep('ru.tinkoff.decoro:decoro')
     implementation dep('com.google.android.material:material')
 }

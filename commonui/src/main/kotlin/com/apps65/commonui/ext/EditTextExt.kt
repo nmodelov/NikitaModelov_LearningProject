@@ -13,6 +13,11 @@ import java.util.WeakHashMap
 
 private val formatters = WeakHashMap<EditText, FormatWatcher>()
 
+/**
+ * Register a callback to be invoked when focus of this view is lost.
+ *
+ * @param action The callback that will run.
+ */
 fun EditText.doOnFocusLost(action: () -> Unit) {
     setOnFocusChangeListener { _, hasFocus ->
         if (!hasFocus) {
@@ -21,6 +26,13 @@ fun EditText.doOnFocusLost(action: () -> Unit) {
     }
 }
 
+/**
+ * Adds a TextWatcher to the list of those whose methods are called
+ * whenever this TextView's text changes.
+ *
+ * @param action The callback that will run.
+ * @receiver Target [EditText].
+ */
 fun EditText.doOnTextUpdated(action: (String) -> Unit) {
     addTextChangedListener(DistinctTextWatcher(action))
 }
@@ -63,6 +75,11 @@ fun EditText.textWithoutMask(mask: MaskImpl): String {
     return mask.toUnformattedString()
 }
 
+/**
+ * Update EditText's text if is not equals given value.
+ *
+ * @receiver Target [EditText].
+ */
 fun EditText.updateText(newText: String) {
     formatters[this]?.let {
         if (it.mask.toUnformattedString() != newText) {
@@ -75,6 +92,13 @@ fun EditText.updateText(newText: String) {
     }
 }
 
+/**
+ * Sets an error message that will be displayed below our [EditText]. If the [error]
+ * is 0, the error message will be cleared.
+ *
+ * @param error Error message string resId to display, or 0 to clear.
+ * @receiver Target [TextInputLayout].
+ */
 fun TextInputLayout.setError(@StringRes error: Int) {
     if (error == 0) {
         isErrorEnabled = false

@@ -5,7 +5,7 @@ import android.widget.TextView
 /**
  * Update TextView's text if is not equals given value.
  */
-var TextView.updateTextOn: CharSequence
+var TextView.newText: CharSequence
     get() = text
     set(value) {
         if (text.toString() == value) {

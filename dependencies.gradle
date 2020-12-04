@@ -1,6 +1,7 @@
 ext {
     daggerVersion = '2.30'
     retrofitVersion = '2.9.0'
+    moshiVersion = '1.11.0'
     okhttpVersion = '4.3.1'
     mviKotlinVersion = '2.0.0'
     coroutinesVersion = '1.4.0'
@@ -53,8 +54,9 @@ ext {
             'com.squareup.okhttp3:logging-interceptor'               : okhttpVersion,
             'com.squareup.retrofit2:retrofit'                        : retrofitVersion,
             'com.squareup.retrofit2:adapter-rxjava2'                 : retrofitVersion,
-            'com.squareup.retrofit2:converter-gson'                  : retrofitVersion,
-            'com.google.code.gson:gson'                              : '2.8.5',
+            'com.squareup.retrofit2:converter-moshi'                 : retrofitVersion,
+            'com.squareup.moshi:moshi-kotlin'                        : moshiVersion,
+            'com.squareup.moshi:moshi-kotlin-codegen'                : moshiVersion,
 
             // Testing
             'junit:junit'                                            : '4.13',

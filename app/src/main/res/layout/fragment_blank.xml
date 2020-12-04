@@ -31,6 +31,16 @@
             android:textSize="40sp"
             tools:text="0" />
 
+        <TextView
+            android:id="@+id/diceState"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginRight="16dp"
+            android:textSize="40sp"
+            tools:text="" />
+
         <Button
             android:id="@+id/blank_button"
             android:layout_width="wrap_content"
@@ -53,5 +63,15 @@
             android:text="Result"
             tools:ignore="HardcodedText" />
 
+        <Button
+            android:id="@+id/rollDice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:text="Roll Dice"
+            tools:ignore="HardcodedText" />
     </LinearLayout>
 </ScrollView>

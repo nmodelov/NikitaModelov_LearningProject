@@ -8,24 +8,33 @@ import com.arkivanov.mvikotlin.core.store.Store
 import kotlinx.parcelize.Parcelize
 
 interface BlankStore : Store<Intent, State, Label> {
-
     sealed class Intent {
         object Increment : Intent()
         object OnResult : Intent()
+        object RollDice : Intent()
     }
 
     sealed class Action {
         data class Connection(val connected: Boolean) : Action()
     }
 
-    sealed class State : Parcelable {
-        @Parcelize
-        data class Blank(val blankCount: Int, val connected: Boolean = false) : State()
-    }
+    @Parcelize
+    data class State(
+        val blankCount: Int,
+        val connected: Boolean = false,
+        val diceState: DiceState? = null
+    ) : Parcelable
 
     sealed class Label {
         data class Result(val count: Int) : Label()
-
         object Blank : Label()
+    }
+
+    sealed class DiceState : Parcelable {
+        @Parcelize
+        object Spinning : DiceState()
+
+        @Parcelize
+        data class DiceIdle(val value: Int) : DiceState()
     }
 }

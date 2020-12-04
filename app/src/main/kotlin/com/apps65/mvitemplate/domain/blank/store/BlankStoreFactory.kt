@@ -44,7 +44,7 @@ internal class BlankStoreFactory @Inject constructor(
 
     private fun getInitialState(): State {
         val savedState = stateKeeper.get<State>(BLANK_STORE_STATE)
-        return savedState ?: State.Blank(0)
+        return savedState ?: State(0)
     }
 
     private fun registerStateKeeper(store: BlankStore) {
@@ -55,8 +55,9 @@ internal class BlankStoreFactory @Inject constructor(
         }
     }
 
-    internal sealed class Result {
+    sealed class Result {
         data class Increment(val value: Int) : Result()
         data class ChangeConnection(val connected: Boolean) : Result()
+        data class DiceResult(val diceState: BlankStore.DiceState) : Result()
     }
 }

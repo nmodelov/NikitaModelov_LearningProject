@@ -99,7 +99,7 @@ open class SuspendDelegationExecutor<in Intent : Any, in Action : Any, in State 
      *
      * @param result a `Result` to be dispatched to the `Reducer`
      */
-    protected suspend fun dispatch(result: Result) = withContext(dispatchersProvider.main) {
+    suspend fun dispatch(result: Result) = withContext(dispatchersProvider.main) {
         callbacks.requireValue().onResult(result)
     }
 
@@ -108,7 +108,7 @@ open class SuspendDelegationExecutor<in Intent : Any, in Action : Any, in State 
      *
      * @param label a `Label` to be published
      */
-    protected suspend fun publish(label: Label) = withContext(dispatchersProvider.main) {
+    suspend fun publish(label: Label) = withContext(dispatchersProvider.main) {
         callbacks.requireValue().onLabel(label)
     }
 

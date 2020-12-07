@@ -3,6 +3,7 @@ package com.apps65.mvitemplate.presentation.blankresult
 import androidx.core.os.bundleOf
 import com.apps65.mvi.BaseFragment
 import com.apps65.mvi.binding.viewBinding
+import com.apps65.mvi.viewFrom
 import com.apps65.mvi.viewModelFrom
 import com.apps65.mvitemplate.R
 import com.apps65.mvitemplate.databinding.FragmentResultBinding
@@ -15,7 +16,6 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class BlankResultFragment : BaseFragment<BlankResultView>(R.layout.fragment_result) {
-
     companion object {
         const val ARGS = "ARGS_COUNT"
         fun newInstance(count: Int): BlankResultFragment = BlankResultFragment().apply {
@@ -31,6 +31,6 @@ class BlankResultFragment : BaseFragment<BlankResultView>(R.layout.fragment_resu
         val component = componentBuilder.bindArgs(Args(count)).build()
         EntryPoints.get(component, FeatureEntryPoint::class.java).getBinder()
     }
-    override val viewImpl by lazy(mode = LazyThreadSafetyMode.NONE) { BlankResultViewImpl(::binding) }
+    override val viewImpl by viewFrom { BlankResultViewImpl(::binding) }
     private val binding by viewBinding(FragmentResultBinding::bind)
 }

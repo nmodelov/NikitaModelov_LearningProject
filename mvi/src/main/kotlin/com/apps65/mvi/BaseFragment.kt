@@ -7,8 +7,8 @@ import androidx.annotation.LayoutRes
 import androidx.fragment.app.Fragment
 
 abstract class BaseFragment<V : BaseView<*, *>>(@LayoutRes layoutId: Int) : Fragment(layoutId) {
-    abstract val binder: Binder<V>
-    abstract val viewImpl: V
+    protected abstract val binder: Binder<V>
+    protected abstract val viewImpl: V
 
     @CallSuper
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

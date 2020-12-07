@@ -6,6 +6,7 @@ import com.apps65.mvi.store.UnicastStoreFactory
 import com.apps65.mvitemplate.domain.blank.store.BlankStore
 import com.apps65.mvitemplate.domain.blank.store.BlankStoreFactory
 import com.apps65.mvitemplate.domain.blank.store.ExecutorsFactory
+import com.apps65.mvitemplate.domain.blank.store.RollDiceExecutorDelegate
 import com.apps65.netutils.connection.ConnectionService
 import com.arkivanov.mvikotlin.core.utils.isAssertOnMainThreadEnabled
 import com.arkivanov.mvikotlin.rx.Observer
@@ -41,7 +42,10 @@ object BlankTest : Spek({
         val blankStoreFactory = BlankStoreFactory(
             storeFactory = UnicastStoreFactory,
             stateKeeper = SavedStateKeeperImpl(),
-            executorsFactory = ExecutorsFactory(dispatcherProvider),
+            executorsFactory = ExecutorsFactory(
+                dispatcherProvider,
+                setOf(RollDiceExecutorDelegate(dispatcherProvider))
+            ),
             connectionService = object : ConnectionService {
                 override fun observeConnectionState(): Flow<Boolean> = flowOf(false)
 
@@ -54,7 +58,7 @@ object BlankTest : Spek({
             runBlockingTest(dispatcher) {
                 blankStore.accept(BlankStore.Intent.Increment)
                 advanceUntilIdle() // <-- Если в проверяемом коде есть delay
-                val currentState = blankStore.state as BlankStore.State.Blank
+                val currentState = blankStore.state
                 assertThat(currentState.blankCount).isEqualTo(1)
             }
         }

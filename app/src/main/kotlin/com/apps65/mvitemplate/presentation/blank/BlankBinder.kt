@@ -27,7 +27,7 @@ class BlankBinder @Inject constructor(
     override fun handleLabel(label: Label) {
         when (label) {
             Label.Blank -> Timber.i("$label has been received")
-            is Label.Result -> router.replaceScreen(blankResultScreen(label.count))
+            is Label.Result -> router.navigateTo(blankResultScreen(label.count))
         }
     }
 

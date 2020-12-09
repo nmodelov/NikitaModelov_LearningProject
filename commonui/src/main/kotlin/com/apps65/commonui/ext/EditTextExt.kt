@@ -98,6 +98,11 @@ fun EditText.updateText(newText: String) {
  * Update EditText's text if is not equals given value. Returns unformatted value.
  */
 var EditText.newText: String
+    @Deprecated(
+        message = "Use unformattedText",
+        replaceWith = ReplaceWith("unformattedText"),
+        level = DeprecationLevel.ERROR
+    )
     get() = formatters[this]?.mask?.toUnformattedString() ?: text.toString()
     set(value) {
         formatters[this]?.let {
@@ -110,6 +115,18 @@ var EditText.newText: String
             }
         }
     }
+
+val EditText.unformattedText: String
+    get() = formatters[this]?.mask?.toUnformattedString() ?: text.toString()
+
+val EditText.formattedText: String
+    get() = formatters[this]?.mask?.toString() ?: text.toString()
+
+val TextInputLayout.unformattedText: String
+    get() = editText?.unformattedText ?: throw IllegalStateException("TextInputLayout hasn't EditText")
+
+val TextInputLayout.formattedText: String
+    get() = editText?.formattedText ?: throw IllegalStateException("TextInputLayout hasn't EditText")
 
 /**
  * Sets an error message that will be displayed below our [EditText]. If the [error]

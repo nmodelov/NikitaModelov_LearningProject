@@ -27,13 +27,13 @@ class MainActivity : BaseActivity<MainView>() {
     private val binding by viewBinding(ActivityMainBinding::inflate)
 
     @Inject
-    lateinit var stateBundleKeeper: StateBundleKeeper
+    lateinit var stateKeeper: StateBundleKeeper
+    override val stateBundleKeeper by lazy(mode = LazyThreadSafetyMode.NONE) { stateKeeper }
 
     private var navigator = AppNavigator(this, R.id.content)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        stateBundleKeeper.restoreState(savedInstanceState)
         setContentView(binding.root)
     }
 
@@ -45,10 +45,5 @@ class MainActivity : BaseActivity<MainView>() {
     override fun onPause() {
         navigatorHolder.removeNavigator()
         super.onPause()
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        stateBundleKeeper.saveState(outState)
     }
 }

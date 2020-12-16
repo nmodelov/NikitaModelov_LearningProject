@@ -5,3 +5,6 @@
 Coroutines + Flow + Dagger Hilt
 
 Пример инъекции runtime зависимостей с помощью Hilt - в blankresult
+
+Плагин для кодогенерации
+https://github.com/hhru/android-multimodule-plugin/tree/master/plugins/hh-geminio

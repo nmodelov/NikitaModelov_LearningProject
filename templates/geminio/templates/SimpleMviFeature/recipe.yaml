@@ -1,0 +1,89 @@
+requiredParams:
+  name: Simple MVI Feature
+  description: Creates Simple MVI Feature
+
+optionalParams:
+  revision: 1
+  category: fragment
+  formFactor: mobile
+  constraints:
+    - kotlin
+  screens:
+    - fragment_gallery
+    - menu_entry
+  minApi: 7
+  minBuildApi: 8
+
+widgets:
+  - stringParameter:
+      id: featureName
+      name: Mvi Name
+      help: The name of the Mvi Feature class to create
+      constraints:
+        - class
+        - nonempty
+        - unique
+      default: SimpleMviFeature
+
+  - stringParameter:
+      id: fragmentName
+      name: Fragment Layout Name
+      help: The name of the layout to create
+      constraints:
+        - layout
+        - nonempty
+        - unique
+      default: fragment_blank
+      suggest: fragment_${featureName.classToResource()}
+
+  - stringParameter:
+      id: featurePackage
+      name: Fragment Layout Name
+      help: The name of the layout to create
+      constraints:
+        - nonempty
+        - unique
+        - package
+      default: featurepackage
+
+recipe:
+  # domain
+  - instantiateAndOpen:
+      from: root/src/mvipackage/domain/store/FeatureExecutorsFactory.kt.ftl
+      to: ${srcOut}/domain/${featurePackage}/store/${featureName}ExecutorsFactory.kt
+  - instantiateAndOpen:
+      from: root/src/mvipackage/domain/store/FeatureReducer.kt.ftl
+      to: ${srcOut}/domain/${featurePackage}/store/${featureName}Reducer.kt
+  - instantiateAndOpen:
+      from: root/src/mvipackage/domain/store/FeatureStore.kt.ftl
+      to: ${srcOut}/domain/${featurePackage}/store/${featureName}Store.kt
+  - instantiateAndOpen:
+      from: root/src/mvipackage/domain/store/FeatureStoreFactory.kt.ftl
+      to: ${srcOut}/domain/${featurePackage}/store/${featureName}StoreFactory.kt
+  # domain di
+  - instantiateAndOpen:
+      from: root/src/mvipackage/domain/FeatureDIModule.kt.ftl
+      to: ${srcOut}/domain/${featurePackage}/${featureName}DIModule.kt
+  # presentation
+  - instantiateAndOpen:
+      from: root/src/mvipackage/presentation/FeatureBinder.kt.ftl
+      to: ${srcOut}/presentation/${featurePackage}/${featureName}Binder.kt
+  - instantiateAndOpen:
+      from: root/src/mvipackage/presentation/FeatureDIModule.kt.ftl
+      to: ${srcOut}/presentation/${featurePackage}/${featureName}DIModule.kt
+  - instantiateAndOpen:
+      from: root/src/mvipackage/presentation/FeatureFragment.kt.ftl
+      to: ${srcOut}/presentation/${featurePackage}/${featureName}Fragment.kt
+  - instantiateAndOpen:
+      from: root/src/mvipackage/presentation/FeatureScreen.kt.ftl
+      to: ${srcOut}/presentation/${featurePackage}/${featureName}Screen.kt
+  - instantiateAndOpen:
+      from: root/src/mvipackage/presentation/FeatureView.kt.ftl
+      to: ${srcOut}/presentation/${featurePackage}/${featureName}View.kt
+  - instantiateAndOpen:
+      from: root/src/mvipackage/presentation/FeatureViewImpl.kt.ftl
+      to: ${srcOut}/presentation/${featurePackage}/${featureName}ViewImpl.kt
+  #resources
+  - instantiateAndOpen:
+      from: root/src/mvipackage/res/fragment_feature.xml
+      to:  ${resOut}/layout/${fragmentName}.xml

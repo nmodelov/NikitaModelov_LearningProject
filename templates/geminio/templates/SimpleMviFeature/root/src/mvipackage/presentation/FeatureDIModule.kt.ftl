@@ -10,7 +10,7 @@ import javax.inject.Provider
 
 @Module
 @InstallIn(FragmentComponent::class)
-object FeatureDIModule {
+object ${featureName}DIModule {
     @Provides
     @FragmentScoped
     fun provideVMFactory(provider: Provider<${featureName}Binder>): ViewModelFactory<${featureName}Binder> =

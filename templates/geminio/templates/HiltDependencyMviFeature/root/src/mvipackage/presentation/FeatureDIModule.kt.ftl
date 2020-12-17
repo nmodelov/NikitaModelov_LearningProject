@@ -1,21 +1,21 @@
 package ${packageName}.presentation.${featurePackage}
 
 import com.apps65.mvi.ViewModelFactory
+import ${packageName}.domain.${featurePackage}.store.Args
+import dagger.BindsInstance
 import dagger.Module
 import dagger.Provides
+import dagger.hilt.DefineComponent
+import dagger.hilt.EntryPoint
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.FragmentComponent
 import dagger.hilt.android.scopes.FragmentScoped
-import ${packageName}.domain.${featurePackage}.store.Args
 import javax.inject.Provider
-import dagger.BindsInstance
-import dagger.hilt.DefineComponent
-import dagger.hilt.EntryPoint
 import javax.inject.Scope
 
 @Module
 @InstallIn(FragmentComponent::class)
-object FeatureDIModule {
+object ${featureName}DIModule {
     @Provides
     @FragmentScoped
     fun provideVMFactory(provider: Provider<${featureName}Binder>): ViewModelFactory<${featureName}Binder> =

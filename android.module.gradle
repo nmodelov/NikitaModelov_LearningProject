@@ -66,7 +66,7 @@ android {
 
     // Add Kotlin source directory to all source sets
     sourceSets.each {
-        it.java.srcDirs += "src/$it.name/kotlin"
+        it.java.srcDirs = ["src/$it.name/kotlin"]
     }
 
     packagingOptions {

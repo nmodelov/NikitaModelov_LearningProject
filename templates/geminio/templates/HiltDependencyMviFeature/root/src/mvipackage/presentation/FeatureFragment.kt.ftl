@@ -16,19 +16,17 @@ import javax.inject.Provider
 class ${featureName}Fragment : BaseStateFragment<${featureName}View>(R.layout.${fragmentName}) {
 
     companion object {
-        const val ARGS = "ARGS_COUNT"
-        fun newInstance(): ${featureName}Fragment = ${featureName}Fragment().apply {
-            arguments = bundleOf(ARGS to count)
-        }
+        fun newInstance(args: Args): ${featureName}Fragment = ${featureName}Fragment().withInitialArguments(args)
     }
 
     @Inject
-    lateinit var binderProvider: Provider<${featureName}Binder>
-    override val binder by viewModelFrom {
-        val count = requireArguments().getInt(ARGS)
-        val component = componentBuilder.bindArgs(Args(count)).build()
+    lateinit var componentBuilder: ${featureName}ComponentBuilder
+
+    override val binder: Binder<${featureName}View> by viewModelFrom {
+        val component = componentBuilder.bindArgs(initialArguments()).build()
         EntryPoints.get(component, ${featureName}EntryPoint::class.java).getBinder()
     }
+
     override val viewImpl by viewFrom { ${featureName}ViewImpl(::binding) }
 
     private val binding by viewBinding(Fragment${featureName}Binding::bind)

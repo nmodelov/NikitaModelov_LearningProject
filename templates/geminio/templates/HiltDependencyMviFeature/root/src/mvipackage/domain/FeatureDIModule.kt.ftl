@@ -8,9 +8,9 @@ import dagger.hilt.android.components.FragmentComponent
 import dagger.hilt.android.scopes.FragmentScoped
 
 @Module
-@InstallIn(FragmentComponent::class)
+@InstallIn(${featureName}Component::class)
 object ${featureName}DIModule {
     @Provides
-    @FragmentScoped
+    ${featureName}Scope
     internal fun provide${featureName}Store(factory: ${featureName}StoreFactory) = factory.create()
 }

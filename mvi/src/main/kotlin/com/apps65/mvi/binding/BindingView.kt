@@ -2,11 +2,11 @@ package com.apps65.mvi.binding
 
 import android.content.Context
 import androidx.viewbinding.ViewBinding
+import com.apps65.mvi.store.UnicastSubject
 import com.arkivanov.mvikotlin.core.annotations.MainThread
 import com.arkivanov.mvikotlin.core.view.MviView
 import com.arkivanov.mvikotlin.rx.Disposable
 import com.arkivanov.mvikotlin.rx.Observer
-import com.arkivanov.mvikotlin.rx.internal.PublishSubject
 
 /**
  * Prevent memory leak when bindingViewImpl stored in fragment lateinit field
@@ -16,7 +16,7 @@ abstract class BindingView<View : ViewBinding, in Model : Any, Event : Any>(
 ) : MviView<Model, Event> {
     protected val context: Context
         get() = binding().root.context
-    private val subject = PublishSubject<Event>()
+    private val subject = UnicastSubject<Event>()
 
     override fun events(observer: Observer<Event>): Disposable = subject.subscribe(observer)
 

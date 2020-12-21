@@ -120,7 +120,7 @@ internal class UnicastLabelStore<
     }
 }
 
-private class UnicastSubject<T>(initialValue: T? = null) : Subject<T> {
+class UnicastSubject<T>(initialValue: T? = null) : Subject<T> {
     private val values: MutableList<T> = if (initialValue != null) {
         mutableListOf(initialValue)
     } else {

@@ -18,6 +18,9 @@ abstract class BaseBinder<
     View : BaseView<Model, Event>
     >(val store: Store<Intent, State, Label>, val dispatchersProvider: DispatchersProvider) : Binder<View>() {
     init {
+        if (store.isDisposed) {
+            throw IllegalStateException("Store is disposed! Please, check DI scope")
+        }
         binderLifecycle.doOnDestroy { store.dispose() }
     }
 

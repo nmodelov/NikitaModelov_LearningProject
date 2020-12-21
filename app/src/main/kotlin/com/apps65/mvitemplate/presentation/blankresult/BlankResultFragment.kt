@@ -28,7 +28,9 @@ class BlankResultFragment : BaseStateFragment<BlankResultView>(R.layout.fragment
 
     override val binder by viewModelFrom {
         val count = requireArguments().getInt(ARGS)
-        val component = componentBuilder.bindArgs(Args(count)).build()
+        val component = componentBuilder
+            .bindArgs(Args(count))
+            .build()
         EntryPoints.get(component, FeatureEntryPoint::class.java).getBinder()
     }
     override val viewImpl by viewFrom { BlankResultViewImpl(::binding) }

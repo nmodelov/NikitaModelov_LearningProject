@@ -9,7 +9,11 @@ import com.apps65.mvitemplate.domain.blank.store.BlankStore.State
 import com.apps65.mvitemplate.presentation.blank.BlankView.Event
 import com.apps65.mvitemplate.presentation.blank.BlankView.Model
 import com.apps65.mvitemplate.presentation.blankresult.blankResultScreen
-import com.github.terrakok.cicerone.Router
+import com.apps65.mvitemplate.presentation.navigation.AppRouter
+import com.apps65.mvitemplate.presentation.navigation.FragmentRouter
+import com.apps65.mvitemplate.presentation.subnavigation.subNavScreen
+import com.apps65.mvitemplate.presentation.subnavigation.tab.Tab
+import com.apps65.mvitemplate.presentation.subnavigation.tab.tabcontainer.tabContainerScreen
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -19,7 +23,8 @@ import javax.inject.Inject
 class BlankBinder @Inject constructor(
     blankStore: BlankStore,
     dispatchersProvider: DispatchersProvider,
-    private val router: Router,
+    @FragmentRouter(BlankFragment::class)
+    private val router: AppRouter,
 ) : DefaultBinder<Intent, State, Label, Event, Model, BlankView>(
     blankStore,
     dispatchersProvider
@@ -28,7 +33,16 @@ class BlankBinder @Inject constructor(
         when (label) {
             Label.Blank -> Timber.i("$label has been received")
             is Label.Result -> router.navigateTo(blankResultScreen(label.count))
+            is Label.SubNavigation -> openSubNavigation()
         }
+    }
+
+    private fun openSubNavigation() {
+        router.navigateTo("", tabContainerScreen())
+        router.newRootScreen(Tab.Tab1.tag(), subNavScreen())
+        router.newRootScreen(Tab.Tab2.tag(), subNavScreen())
+        router.newRootScreen(Tab.Tab3.tag(), subNavScreen())
+        router.switch(Tab.Tab1.screen())
     }
 
     /**
@@ -43,6 +57,7 @@ class BlankBinder @Inject constructor(
             Event.OnBlankClick -> Intent.Increment
             Event.OnResultClick -> Intent.OnResult
             Event.RollDice -> Intent.RollDice
+            Event.SubNavigation -> Intent.SubNavigation
         }
     }
 }

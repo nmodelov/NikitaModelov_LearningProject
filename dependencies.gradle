@@ -82,7 +82,7 @@ ext {
             'com.github.terrakok:cicerone'                           : '6.6',
 
             // Cicerone addons
-            'com.github.aradxxx:ciceroneflows'                       : '0.6.62',
+            'com.github.aradxxx:ciceroneflows'                       : '0.6.63',
             'com.github.aradxxx:ciceronescreens'                     : '1.0',
 
             // Preference

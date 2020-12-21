@@ -34,6 +34,7 @@ internal class ExecutorsFactory @Inject constructor(
                 when (intent) {
                     is Intent.Increment -> executeIncrement()
                     Intent.OnResult -> publish(Label.Result(getState().blankCount))
+                    Intent.SubNavigation -> publish(Label.SubNavigation)
                 }
             }
 

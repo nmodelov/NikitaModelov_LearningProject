@@ -3,9 +3,9 @@ package com.apps65.mvitemplate.presentation.di
 import com.apps65.mvi.saving.SavedStateKeeper
 import com.apps65.mvi.saving.SavedStateKeeperImpl
 import com.apps65.mvi.saving.StateBundleKeeper
+import com.apps65.mvitemplate.presentation.navigation.AppFlowRouterFactory
 import com.apps65.mvitemplate.presentation.navigation.AppRouter
-import com.github.terrakok.cicerone.Cicerone
-import com.github.terrakok.cicerone.Router
+import com.github.aradxxx.ciceroneflow.FlowCicerone
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -22,13 +22,14 @@ object PresentationDIModule {
 
     @Provides
     @Singleton
-    internal fun provideCicerone(): Cicerone<AppRouter> = Cicerone.create(AppRouter())
+    internal fun provideFlowRouterFactory(): AppFlowRouterFactory = AppFlowRouterFactory {
+        AppRouter()
+    }
 
     @Provides
-    internal fun provideRouter(cicerone: Cicerone<AppRouter>): Router = cicerone.router
-
-    @Provides
-    internal fun provideNavigatorHolder(cicerone: Cicerone<AppRouter>) = cicerone.getNavigatorHolder()
+    @Singleton
+    internal fun provideCicerone(appFlowRouterFactory: AppFlowRouterFactory): FlowCicerone<AppRouter> =
+        FlowCicerone(appFlowRouterFactory)
 
     @Module
     @InstallIn(SingletonComponent::class)

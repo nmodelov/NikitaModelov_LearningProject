@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:id="@+id/root"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:gravity="center"
+            android:textAlignment="center"
+            android:textSize="18sp" />
+
+        <Button
+            android:id="@+id/switchTo2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:text="SWITCH TO 2 TAB"
+            tools:ignore="HardcodedText" />
+
+        <Button
+            android:id="@+id/switchto3AndOpen"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:text="SWITCH TO 3 TAB AND OPEN ANOTHER ONE"
+            tools:ignore="HardcodedText" />
+
+        <Button
+            android:id="@+id/addTo3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:text="ADD TO 3 WITHOUT SWITCH"
+            tools:ignore="HardcodedText" />
+
+        <Button
+            android:id="@+id/openNext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:text="OPEN NEXT IN CURRENT TAB"
+            tools:ignore="HardcodedText" />
+
+        <Button
+            android:id="@+id/openNextGlobal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:text="OPEN NEXT IN ACTIVITY GLOBAL"
+            tools:ignore="HardcodedText" />
+    </LinearLayout>
+</ScrollView>

@@ -12,6 +12,7 @@ interface BlankStore : Store<Intent, State, Label> {
         object Increment : Intent()
         object OnResult : Intent()
         object RollDice : Intent()
+        object SubNavigation : Intent()
     }
 
     sealed class Action {
@@ -28,6 +29,7 @@ interface BlankStore : Store<Intent, State, Label> {
     sealed class Label {
         data class Result(val count: Int) : Label()
         object Blank : Label()
+        object SubNavigation : Label()
     }
 
     sealed class DiceState : Parcelable {

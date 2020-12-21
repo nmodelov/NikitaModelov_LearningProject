@@ -10,5 +10,6 @@ interface BlankView : BaseView<BlankView.Model, BlankView.Event> {
         object OnBlankClick : Event()
         object OnResultClick : Event()
         object RollDice : Event()
+        object SubNavigation : Event()
     }
 }

@@ -10,5 +10,5 @@ import javax.inject.Inject
 
 class BlankResultBinder @Inject constructor(
     blankStore: BlankResultStore,
-    dispatchersProvider: DispatchersProvider
+    dispatchersProvider: DispatchersProvider,
 ) : SimpleBinder<Intent, State, Label, BlankResultView>(blankStore, dispatchersProvider)

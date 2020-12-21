@@ -7,22 +7,20 @@ import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ActivityRetainedComponent
-import dagger.hilt.android.scopes.ActivityRetainedScoped
 import dagger.multibindings.IntoSet
 
 @Module
-@InstallIn(ActivityRetainedComponent::class)
+@InstallIn(BlankComponent::class)
 object BlankDIModule {
     @Provides
-    @ActivityRetainedScoped
+    @FeatureScope
     internal fun provideBlankStore(factory: BlankStoreFactory) = factory.create()
 
     @Module
-    @InstallIn(ActivityRetainedComponent::class)
+    @InstallIn(BlankComponent::class)
     internal interface BlankDIExModule {
         @Binds
-        @ActivityRetainedScoped
+        @FeatureScope
         @IntoSet
         fun provideRollDiceExecutorDelegate(delegate: RollDiceExecutorDelegate): BlankExecutorDelegate
     }

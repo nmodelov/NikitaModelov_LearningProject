@@ -5,10 +5,13 @@ import com.apps65.mvi.viewFrom
 import com.apps65.mvi.viewModelFrom
 import com.apps65.mvitemplate.R
 import com.apps65.mvitemplate.databinding.FragmentBlankBinding
+import com.apps65.mvitemplate.domain.blank.BlankComponentBuilder
+import com.apps65.mvitemplate.domain.blank.FeatureEntryPoint
 import com.apps65.mvitemplate.presentation.base.BaseStateFragment
+import com.apps65.mvitemplate.presentation.subnavigation.tab.router
+import dagger.hilt.EntryPoints
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
-import javax.inject.Provider
 
 @AndroidEntryPoint
 class BlankFragment : BaseStateFragment<BlankView>(R.layout.fragment_blank) {
@@ -18,8 +21,13 @@ class BlankFragment : BaseStateFragment<BlankView>(R.layout.fragment_blank) {
     }
 
     @Inject
-    lateinit var binderProvider: Provider<BlankBinder>
-    override val binder by viewModelFrom { binderProvider }
+    lateinit var componentBuilder: BlankComponentBuilder
+    override val binder by viewModelFrom {
+        val component = componentBuilder
+            .bindRouter(router())
+            .build()
+        EntryPoints.get(component, FeatureEntryPoint::class.java).getBinder()
+    }
     override val viewImpl by viewFrom { BlankViewImpl(::binding) }
 
     private val binding by viewBinding(FragmentBlankBinding::bind)

@@ -1,5 +1,5 @@
 package com.apps65.mvitemplate.presentation.navigation
 
-import com.github.terrakok.cicerone.Router
+import com.github.aradxxx.ciceroneflow.FlowRouter
 
-class AppRouter : Router()
+class AppRouter : FlowRouter()

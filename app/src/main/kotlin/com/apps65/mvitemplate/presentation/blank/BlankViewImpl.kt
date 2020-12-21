@@ -19,6 +19,9 @@ class BlankViewImpl(binding: () -> FragmentBlankBinding) :
             rollDice.setOnClickListener {
                 dispatch(BlankView.Event.RollDice)
             }
+            subNavigation.setOnClickListener {
+                dispatch(BlankView.Event.SubNavigation)
+            }
         }
     }
 

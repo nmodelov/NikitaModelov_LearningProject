@@ -34,7 +34,7 @@ allprojects {
         google()
         jcenter()
         maven {
-            url "https://dl.bintray.com/arkivanov/maven"
+            url 'https://jitpack.io'
         }
     }
     project.ext {

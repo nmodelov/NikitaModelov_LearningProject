@@ -1,9 +1,11 @@
 package com.apps65.mvitemplate.domain.main.store
 
 import com.apps65.mvi.saving.SavedStateKeeper
+import com.apps65.mvitemplate.domain.main.store.MainStore.Action
 import com.apps65.mvitemplate.domain.main.store.MainStore.Intent
 import com.apps65.mvitemplate.domain.main.store.MainStore.Label
 import com.apps65.mvitemplate.domain.main.store.MainStore.State
+import com.arkivanov.mvikotlin.core.store.Reducer
 import com.arkivanov.mvikotlin.core.store.SimpleBootstrapper
 import com.arkivanov.mvikotlin.core.store.Store
 import com.arkivanov.mvikotlin.core.store.StoreFactory
@@ -24,7 +26,10 @@ internal class MainStoreFactory @Inject constructor(
                 name = "MainStore",
                 initialState = getInitialState(),
                 executorFactory = executorFactory,
-                bootstrapper = SimpleBootstrapper(MainStore.Action.Blank)
+                reducer = object : Reducer<State, State> {
+                    override fun State.reduce(result: State) = result
+                },
+                bootstrapper = SimpleBootstrapper(Action.Blank)
             ) {}
             .also { registerStateKeeper(it) }
     }
@@ -46,7 +51,7 @@ internal class MainStoreFactory @Inject constructor(
         object : SuspendExecutor<Intent, Any, State, State, Label>() {
             override suspend fun executeAction(action: Any, getState: () -> State) {
                 super.executeAction(action, getState)
-                if (getState() == State.Init && action == MainStore.Action.Blank) {
+                if (getState() == State.Init && action == Action.Blank) {
                     dispatch(State.Idle)
                     publish(Label.Started)
                 }

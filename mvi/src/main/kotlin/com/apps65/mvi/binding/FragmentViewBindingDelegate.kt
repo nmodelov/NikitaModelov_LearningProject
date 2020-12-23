@@ -2,6 +2,7 @@ package com.apps65.mvi.binding
 
 import android.view.View
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
@@ -16,18 +17,25 @@ class FragmentViewBindingDelegate<T : ViewBinding>(
     private var binding: T? = null
 
     init {
+        val callback = object : FragmentManager.FragmentLifecycleCallbacks() {
+            override fun onFragmentViewDestroyed(fm: FragmentManager, f: Fragment) {
+                super.onFragmentViewDestroyed(fm, f)
+                if (f === fragment) {
+                    binding = null
+                }
+            }
+        }
+
         fragment.lifecycle.addObserver(
             object : DefaultLifecycleObserver {
                 override fun onCreate(owner: LifecycleOwner) {
-                    fragment.viewLifecycleOwnerLiveData.observe(fragment) { viewLifecycleOwner ->
-                        viewLifecycleOwner.lifecycle.addObserver(
-                            object : DefaultLifecycleObserver {
-                                override fun onDestroy(owner: LifecycleOwner) {
-                                    binding = null
-                                }
-                            }
-                        )
-                    }
+                    fragment.requireFragmentManager()
+                        .registerFragmentLifecycleCallbacks(callback, false)
+                }
+
+                override fun onDestroy(owner: LifecycleOwner) {
+                    fragment.requireFragmentManager()
+                        .unregisterFragmentLifecycleCallbacks(callback)
                 }
             }
         )

@@ -16,6 +16,17 @@ inline fun <T : ViewBinding> AppCompatActivity.viewBinding(
 fun <T : ViewBinding> Fragment.viewBinding(viewBindingFactory: (View) -> T) =
     FragmentViewBindingDelegate(this, viewBindingFactory)
 
+@Deprecated(
+    "dialog fragment should use viewbinding with ::inflate",
+    replaceWith = ReplaceWith(
+        "viewBinding(T::inflate)",
+        "com.apps65.mvi.binding.viewBinding"
+    ),
+    level = DeprecationLevel.ERROR
+)
+fun <T : ViewBinding> DialogFragment.viewBinding(viewBindingFactory: (View) -> T) =
+    FragmentViewBindingDelegate(this, viewBindingFactory)
+
 fun <T : ViewBinding> DialogFragment.viewBinding(
     bindingInflater: (LayoutInflater) -> T
 ) = DialogFragmentViewBindingDelegate(this, bindingInflater)

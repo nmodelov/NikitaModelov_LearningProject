@@ -1,12 +1,15 @@
 package com.apps65.blank
 
+import android.os.Parcelable
 import com.apps65.mvi.common.DispatchersProvider
+import com.apps65.mvi.saving.SavedStateKeeper
 import com.apps65.mvi.store.UnicastStoreFactory
 import com.apps65.mvitemplate.domain.blank.store.BlankStore
 import com.apps65.mvitemplate.domain.blank.store.BlankStoreFactory
 import com.apps65.mvitemplate.domain.blank.store.ExecutorsFactory
 import com.apps65.mvitemplate.domain.blank.store.RollDiceExecutorDelegate
 import com.apps65.netutils.connection.ConnectionService
+import com.arkivanov.mvikotlin.core.store.Store
 import com.arkivanov.mvikotlin.core.utils.isAssertOnMainThreadEnabled
 import com.arkivanov.mvikotlin.rx.Observer
 import kotlinx.coroutines.Dispatchers
@@ -40,7 +43,17 @@ object BlankTest : Spek({
     describe("blank screen test") {
         val blankStoreFactory = BlankStoreFactory(
             storeFactory = UnicastStoreFactory,
-            stateKeeper = SavedStateKeeperImpl(),
+            stateKeeper = object : SavedStateKeeper {
+                override fun <P : Parcelable> get(key: String): P? = null
+
+                override fun <S : Store<*, *, *>, P : Parcelable> register(
+                    store: S,
+                    key: String,
+                    stateProvider: S.() -> P
+                ) = Unit
+
+                override fun unregister() = Unit
+            },
             executorsFactory = ExecutorsFactory(
                 dispatcherProvider,
                 setOf(RollDiceExecutorDelegate(dispatcherProvider))

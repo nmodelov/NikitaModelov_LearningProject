@@ -17,15 +17,19 @@ internal class SubNavStoreFactory @Inject constructor(
 ) {
 
     fun create(): SubNavStore {
-        return object :
-            SubNavStore,
-            Store<Intent, State, Label> by storeFactory.create(
-                name = "SubNavStore",
-                initialState = getInitialState(),
-                executorFactory = subNavExecutorsFactory.create(),
-                reducer = SubNavReducer()
-            ) {}
-            .also { registerStateKeeper(it) }
+        val storeDelegate = storeFactory.create(
+            name = "SubNavStore",
+            initialState = getInitialState(),
+            executorFactory = subNavExecutorsFactory.create(),
+            reducer = SubNavReducer()
+        )
+
+        return object : SubNavStore, Store<Intent, State, Label> by storeDelegate {
+            override fun dispose() {
+                storeDelegate.dispose()
+                stateKeeper.unregister()
+            }
+        }.also { registerStateKeeper(it) }
     }
 
     private fun getInitialState(): State {

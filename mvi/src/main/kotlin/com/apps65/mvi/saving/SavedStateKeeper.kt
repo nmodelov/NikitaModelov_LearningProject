@@ -10,4 +10,5 @@ interface SavedStateKeeper {
         key: String,
         stateProvider: S.() -> P
     )
+    fun unregister()
 }

@@ -38,8 +38,8 @@ widgets:
 
   - stringParameter:
       id: featurePackage
-      name: Fragment Layout Name
-      help: The name of the layout to create
+      name: Feature Package
+      help: PackageName
       constraints:
         - nonempty
         - unique

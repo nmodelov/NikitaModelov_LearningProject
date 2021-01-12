@@ -26,6 +26,7 @@ ext {
             'androidx.lifecycle:lifecycle-runtime'                   : lifecycleVersion,
             'androidx.lifecycle:lifecycle-common-java8'              : lifecycleVersion,
             'androidx.lifecycle:lifecycle-livedata-ktx'              : lifecycleVersion,
+            'androidx.lifecycle:lifecycle-viewmodel-savedstate'      : lifecycleVersion,
 
             // RxJava2
             'io.reactivex.rxjava2:rxjava'                            : '2.2.16',
@@ -77,6 +78,7 @@ ext {
             'com.arkivanov.mvikotlin:rx'                             : mviKotlinVersion,
             'com.arkivanov.mvikotlin:rx-internal'                    : mviKotlinVersion,
             'com.arkivanov.mvikotlin:utils-internal'                 : mviKotlinVersion,
+            'com.arkivanov.mvikotlin:keepers'                        : mviKotlinVersion,
 
             // Cicerone
             'com.github.terrakok:cicerone'                           : '6.6',

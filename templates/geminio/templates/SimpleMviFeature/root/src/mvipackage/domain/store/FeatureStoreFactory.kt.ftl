@@ -18,16 +18,20 @@ internal class ${featureName}StoreFactory @Inject constructor(
 ) {
 
     fun create(): ${featureName}Store {
-        return object :
-            ${featureName}Store,
-            Store<Intent, State, Label> by storeFactory.create(
-                name = "${featureName}Store",
-                initialState = getInitialState(),
-                executorFactory = executorsFactory.create(),
-                reducer = ${featureName}Reducer(),
-                bootstrapper = bootstrapper
-            ) {}
-            .also { registerStateKeeper(it) }
+        val storeDelegate = storeFactory.create(
+            name = "${featureName}Store",
+            initialState = getInitialState(),
+            executorFactory = executorsFactory.create(),
+            reducer = ${featureName}Reducer(),
+            bootstrapper = bootstrapper
+        )
+
+        return object : ${featureName}Store, Store<Intent, State, Label> by storeDelegate {
+            override fun dispose() {
+                storeDelegate.dispose()
+                stateKeeper.unregister()
+            }
+        }.also { registerStateKeeper(it) }
     }
 
     private val bootstrapper = object : SuspendBootstrapper<${featureName}Store.Action>() {

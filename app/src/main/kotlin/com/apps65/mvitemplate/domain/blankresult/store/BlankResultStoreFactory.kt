@@ -20,14 +20,18 @@ internal class BlankResultStoreFactory @Inject constructor(
 ) {
 
     fun create(): BlankResultStore {
-        return object :
-            BlankResultStore,
-            Store<Intent, State, Label> by storeFactory.create(
-                name = "BlankStore",
-                initialState = getInitialState(),
-                executorFactory = emptyExecutorFactory
-            ) {}
-            .also { registerStateKeeper(it) }
+        val storeDelegate = storeFactory.create(
+            name = "BlankStore",
+            initialState = getInitialState(),
+            executorFactory = emptyExecutorFactory
+        )
+
+        return object : BlankResultStore, Store<Intent, State, Label> by storeDelegate {
+            override fun dispose() {
+                storeDelegate.dispose()
+                stateKeeper.unregister()
+            }
+        }.also { registerStateKeeper(it) }
     }
 
     private fun getInitialState(): State {

@@ -1,11 +1,11 @@
 package com.apps65.mvitemplate.presentation.subnavigation.tab.tabcontainer
 
+import com.apps65.mvi.BaseFragment
 import com.apps65.mvi.binding.viewBinding
 import com.apps65.mvi.viewFrom
 import com.apps65.mvi.viewModelFrom
 import com.apps65.mvitemplate.R
 import com.apps65.mvitemplate.databinding.FragmentTabsContainerBinding
-import com.apps65.mvitemplate.presentation.base.BaseStateFragment
 import com.apps65.mvitemplate.presentation.navigation.AppNavigator
 import com.apps65.mvitemplate.presentation.navigation.AppRouter
 import com.apps65.mvitemplate.presentation.subnavigation.tab.Tab
@@ -19,7 +19,7 @@ import javax.inject.Provider
 
 @AndroidEntryPoint
 class TabContainerFragment :
-    BaseStateFragment<TabContainerView>(R.layout.fragment_tabs_container),
+    BaseFragment<TabContainerView>(R.layout.fragment_tabs_container),
     NavigationContainer<FlowRouter>,
     TabListener {
 

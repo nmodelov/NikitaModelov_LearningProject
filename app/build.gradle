@@ -55,4 +55,8 @@ dependencies {
 
     // Preference
     implementation dep('androidx.preference:preference-ktx')
+
+    implementation dep('androidx.lifecycle:lifecycle-runtime')
+    implementation dep('androidx.lifecycle:lifecycle-common-java8')
+    implementation dep('androidx.lifecycle:lifecycle-livedata-ktx')
 }

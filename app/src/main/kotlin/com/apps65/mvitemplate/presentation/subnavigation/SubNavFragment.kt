@@ -1,5 +1,6 @@
 package com.apps65.mvitemplate.presentation.subnavigation
 
+import com.apps65.mvi.BaseFragment
 import com.apps65.mvi.binding.viewBinding
 import com.apps65.mvi.viewFrom
 import com.apps65.mvi.viewModelFrom
@@ -7,14 +8,13 @@ import com.apps65.mvitemplate.R
 import com.apps65.mvitemplate.databinding.FragmentSubnavSampleBinding
 import com.apps65.mvitemplate.domain.subnav.FeatureEntryPoint
 import com.apps65.mvitemplate.domain.subnav.SubNavComponentBuilder
-import com.apps65.mvitemplate.presentation.base.BaseStateFragment
 import com.apps65.mvitemplate.presentation.subnavigation.tab.router
 import dagger.hilt.EntryPoints
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class SubNavFragment : BaseStateFragment<SubNavView>(R.layout.fragment_subnav_sample) {
+class SubNavFragment : BaseFragment<SubNavView>(R.layout.fragment_subnav_sample) {
     companion object {
         fun newInstance() = SubNavFragment()
     }

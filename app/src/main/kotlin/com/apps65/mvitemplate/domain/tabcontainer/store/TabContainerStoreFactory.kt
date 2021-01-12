@@ -19,14 +19,17 @@ internal class TabContainerStoreFactory @Inject constructor(
 ) {
 
     fun create(): TabContainerStore {
-        return object :
-            TabContainerStore,
-            Store<Intent, State, Label> by storeFactory.create(
-                name = "TabContainerStore",
-                initialState = getInitialState(),
-                executorFactory = executorFactory
-            ) {}
-            .also { registerStateKeeper(it) }
+        val storeDelegate = storeFactory.create(
+            name = "TabContainerStore",
+            initialState = getInitialState(),
+            executorFactory = executorFactory
+        )
+        return object : TabContainerStore, Store<Intent, State, Label> by storeDelegate {
+            override fun dispose() {
+                storeDelegate.dispose()
+                stateKeeper.unregister()
+            }
+        }.also { registerStateKeeper(it) }
     }
 
     private fun getInitialState(): State {

@@ -5,6 +5,7 @@ import com.apps65.mvitemplate.domain.main.store.MainStore.Action
 import com.apps65.mvitemplate.domain.main.store.MainStore.Intent
 import com.apps65.mvitemplate.domain.main.store.MainStore.Label
 import com.apps65.mvitemplate.domain.main.store.MainStore.State
+import com.apps65.mvitemplate.presentation.di.ActivityKeeper
 import com.arkivanov.mvikotlin.core.store.Reducer
 import com.arkivanov.mvikotlin.core.store.SimpleBootstrapper
 import com.arkivanov.mvikotlin.core.store.Store
@@ -16,22 +17,27 @@ private const val MAIN_STORE_STATE = "main_store_state"
 
 internal class MainStoreFactory @Inject constructor(
     private val storeFactory: StoreFactory,
+    @ActivityKeeper
     private val stateKeeper: SavedStateKeeper
 ) {
 
     fun create(): MainStore {
-        return object :
-            MainStore,
-            Store<Intent, State, Label> by storeFactory.create(
-                name = "MainStore",
-                initialState = getInitialState(),
-                executorFactory = executorFactory,
-                reducer = object : Reducer<State, State> {
-                    override fun State.reduce(result: State) = result
-                },
-                bootstrapper = SimpleBootstrapper(Action.Blank)
-            ) {}
-            .also { registerStateKeeper(it) }
+        val storeDelegate = storeFactory.create(
+            name = "MainStore",
+            initialState = getInitialState(),
+            executorFactory = executorFactory,
+            reducer = object : Reducer<State, State> {
+                override fun State.reduce(result: State) = result
+            },
+            bootstrapper = SimpleBootstrapper(Action.Blank)
+        )
+
+        return object : MainStore, Store<Intent, State, Label> by storeDelegate {
+            override fun dispose() {
+                storeDelegate.dispose()
+                stateKeeper.unregister()
+            }
+        }.also { registerStateKeeper(it) }
     }
 
     private fun getInitialState(): State {

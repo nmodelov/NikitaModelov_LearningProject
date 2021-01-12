@@ -1,5 +1,6 @@
 package com.apps65.mvitemplate.presentation.blank
 
+import com.apps65.mvi.BaseFragment
 import com.apps65.mvi.binding.viewBinding
 import com.apps65.mvi.viewFrom
 import com.apps65.mvi.viewModelFrom
@@ -7,14 +8,13 @@ import com.apps65.mvitemplate.R
 import com.apps65.mvitemplate.databinding.FragmentBlankBinding
 import com.apps65.mvitemplate.domain.blank.BlankComponentBuilder
 import com.apps65.mvitemplate.domain.blank.FeatureEntryPoint
-import com.apps65.mvitemplate.presentation.base.BaseStateFragment
 import com.apps65.mvitemplate.presentation.subnavigation.tab.router
 import dagger.hilt.EntryPoints
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class BlankFragment : BaseStateFragment<BlankView>(R.layout.fragment_blank) {
+class BlankFragment : BaseFragment<BlankView>(R.layout.fragment_blank) {
 
     companion object {
         fun newInstance(): BlankFragment = BlankFragment()

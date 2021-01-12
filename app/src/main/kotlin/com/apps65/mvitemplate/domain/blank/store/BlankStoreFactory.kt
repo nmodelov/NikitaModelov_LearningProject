@@ -21,16 +21,19 @@ internal class BlankStoreFactory @Inject constructor(
 ) {
 
     fun create(): BlankStore {
-        return object :
-            BlankStore,
-            Store<Intent, State, Label> by storeFactory.create(
-                name = "BlankStore",
-                initialState = getInitialState(),
-                executorFactory = executorsFactory.create(),
-                reducer = Reducer(),
-                bootstrapper = bootstrapper
-            ) {}
-            .also { registerStateKeeper(it) }
+        val storeDelegate = storeFactory.create(
+            name = "BlankStore",
+            initialState = getInitialState(),
+            executorFactory = executorsFactory.create(),
+            reducer = Reducer(),
+            bootstrapper = bootstrapper
+        )
+        return object : BlankStore, Store<Intent, State, Label> by storeDelegate {
+            override fun dispose() {
+                storeDelegate.dispose()
+                stateKeeper.unregister()
+            }
+        }.also { registerStateKeeper(it) }
     }
 
     private val bootstrapper = object : SuspendBootstrapper<BlankStore.Action>() {

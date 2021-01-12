@@ -1,7 +1,6 @@
 package com.apps65.blank
 
 import com.apps65.mvi.common.DispatchersProvider
-import com.apps65.mvi.saving.SavedStateKeeperImpl
 import com.apps65.mvi.store.UnicastStoreFactory
 import com.apps65.mvitemplate.domain.blank.store.BlankStore
 import com.apps65.mvitemplate.domain.blank.store.BlankStoreFactory

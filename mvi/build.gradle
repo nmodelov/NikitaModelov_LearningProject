@@ -7,12 +7,15 @@ dependencies {
     implementation dep('androidx.lifecycle:lifecycle-runtime')
     implementation dep('androidx.lifecycle:lifecycle-common-java8')
     implementation dep('androidx.lifecycle:lifecycle-livedata-ktx')
+    implementation dep ('androidx.lifecycle:lifecycle-viewmodel-savedstate')
 
     // MVI Kotlin
     api dep('com.arkivanov.mvikotlin:mvikotlin')
     api dep('com.arkivanov.mvikotlin:mvikotlin-main')
     api dep('com.arkivanov.mvikotlin:rx')
     api dep('com.arkivanov.mvikotlin:rx-internal')
+    api dep('com.arkivanov.mvikotlin:keepers')
+
     implementation dep('com.arkivanov.mvikotlin:utils-internal')
 
     api dep('androidx.appcompat:appcompat')
